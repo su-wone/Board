@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import MemoItem from "@/components/MemoItem";
 
 export default function Home() {
   const [memos, setMemos] = useState([]);
@@ -54,26 +55,17 @@ export default function Home() {
 
       <ul className="space-y-2">
         {memos.map((memo) => (
-          <li key={memo.id} className="flex items-center gap-2">
-            {editingId === memo.id ? (
-              <>
-                <input
-                  type="text"
-                  value={editingText}
-                  onChange={(e) => setEditingText(e.target.value)}
-                  className="flex-1 border border-gray-300 rounded px-2 py-1"
-                />
-                <button onClick={() => saveEdit(memo.id)} className="text-green-600 hover:text-green-800">저장</button>
-                <button onClick={cancelEdit} className="text-gray-500 hover:text-gray-700">취소</button>
-              </>
-            ) : (
-              <>
-                <span className="flex-1">{memo.text}</span>
-                <button onClick={() => startEdit(memo)} className="text-blue-500 hover:text-blue-700">수정</button>
-                <button onClick={() => deleteMemo(memo.id)} className="text-red-500 hover:text-red-700">삭제</button>
-              </>
-            )}
-          </li>
+          <MemoItem
+            key={memo.id}
+            memo={memo}
+            editingId={editingId}
+            editingText={editingText}
+            setEditingText={setEditingText}
+            startEdit={startEdit}
+            saveEdit={saveEdit}
+            cancelEdit={cancelEdit}
+            deleteMemo={deleteMemo}
+          />
 
         ))}
       </ul>
