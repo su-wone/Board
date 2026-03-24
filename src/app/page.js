@@ -44,32 +44,33 @@ export default function Home() {
   };
 
   return (
-    <div>
-      <h1>게시판</h1>
+    <div className="max-w-xl mx-auto">
+      <h1 className="text-2xl font-bold mb-6">게시판</h1>
 
-      <div>
-        <input type="text" value={input} onChange={(e) => setInput(e.target.value)} placeholder="내용을 입력하세요" />
-        <button onClick={addMemo}>추가</button>
+      <div className="flex gap-2 mb-6">
+        <input type="text" value={input} onChange={(e) => setInput(e.target.value)} placeholder="내용을 입력하세요" className="flex-1 border border-gray-300 rounded px-3 py-2" />
+        <button onClick={addMemo} className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">추가</button>
       </div>
 
-      <ul>
+      <ul className="space-y-2">
         {memos.map((memo) => (
-          <li key={memo.id}>
+          <li key={memo.id} className="flex items-center gap-2">
             {editingId === memo.id ? (
               <>
                 <input
                   type="text"
                   value={editingText}
                   onChange={(e) => setEditingText(e.target.value)}
+                  className="flex-1 border border-gray-300 rounded px-2 py-1"
                 />
-                <button onClick={() => saveEdit(memo.id)}>저장</button>
-                <button onClick={cancelEdit}>취소</button>
+                <button onClick={() => saveEdit(memo.id)} className="text-green-600 hover:text-green-800">저장</button>
+                <button onClick={cancelEdit} className="text-gray-500 hover:text-gray-700">취소</button>
               </>
             ) : (
               <>
-                <span>{memo.text}</span>
-                <button onClick={() => startEdit(memo)}>수정</button>
-                <button onClick={() => deleteMemo(memo.id)}>삭제</button>
+                <span className="flex-1">{memo.text}</span>
+                <button onClick={() => startEdit(memo)} className="text-blue-500 hover:text-blue-700">수정</button>
+                <button onClick={() => deleteMemo(memo.id)} className="text-red-500 hover:text-red-700">삭제</button>
               </>
             )}
           </li>
