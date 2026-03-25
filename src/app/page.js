@@ -1,7 +1,9 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import MemoItem from "@/components/MemoItem";
+
+const API_URL = "http://localhost:3000/memos";
 
 export default function Home() {
   const [memos, setMemos] = useState([]);
@@ -9,15 +11,29 @@ export default function Home() {
   const [editingId, setEditingId] = useState(null);
   const [editingText, setEditingText] = useState("");
 
+  // 페이지 로드 시 메모 목록 가져오기
+  useEffect(() => {
+    fetch(API_URL)
+      .then((res) => res.json())
+      .then((data) => setMemos(data));
+  }, []);
+
   // 추가함수
-  const addMemo = () => {
+  const addMemo = async () => {
     if (!input.trim()) return;
-    setMemos([...memos, { id: Date.now(), text: input }]);
+    const res = await fetch(API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ text: input }),
+    });
+    const newMemo = await res.json();
+    setMemos([...memos, newMemo]);
     setInput("");
   };
 
   // 삭제함수
-  const deleteMemo = (id) => {
+  const deleteMemo = async (id) => {
+    await fetch(`${API_URL}/${id}`, { method: "DELETE" });
     setMemos(memos.filter((memo) => memo.id !== id));
   };
 
@@ -28,12 +44,14 @@ export default function Home() {
   };
 
   // 수정 저장
-  const saveEdit = (id) => {
-    setMemos(
-      memos.map((memo) =>
-        memo.id === id ? { ...memo, text: editingText } : memo
-      )
-    );
+  const saveEdit = async (id) => {
+    const res = await fetch(`${API_URL}/${id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ text: editingText }),
+    });
+    const updated = await res.json();
+    setMemos(memos.map((memo) => (memo.id === id ? updated : memo)));
     setEditingId(null);
     setEditingText("");
   };
