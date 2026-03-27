@@ -1,5 +1,19 @@
 "use client"
 
+import { Memo } from "@/types/memo";
+
+// MemoItem이 받는 props의 타입 정의
+interface MemoItemProps {
+    memo: Memo;
+    editingId: number | null;
+    editingText: string;
+    setEditingText: (text: string) => void;
+    saveEdit: (id: number) => void;
+    cancelEdit: () => void;
+    deleteMemo: (id: number) => void;
+    startEdit: (memo: Memo) => void;
+}
+
 export default function MemoItem({
     memo,
     editingId,
@@ -9,7 +23,7 @@ export default function MemoItem({
     cancelEdit,
     deleteMemo,
     startEdit,
-}) {
+}: MemoItemProps) {
     return (
         <li className="flex gap-2">
             {editingId === memo.id ? (
