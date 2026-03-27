@@ -2,14 +2,15 @@
 
 import { useState, useEffect } from "react"
 import MemoItem from "@/components/MemoItem";
+import { Memo } from "@/types/memo";
 
 const API_URL = "http://localhost:3000/memos";
 
 export default function Home() {
-  const [memos, setMemos] = useState([]);
-  const [input, setInput] = useState("");
-  const [editingId, setEditingId] = useState(null);
-  const [editingText, setEditingText] = useState("");
+  const [memos, setMemos] = useState<Memo[]>([]);
+  const [input, setInput] = useState<string>("");
+  const [editingId, setEditingId] = useState<number | null>(null);
+  const [editingText, setEditingText] = useState<string>("");
 
   // 페이지 로드 시 메모 목록 가져오기
   useEffect(() => {
@@ -32,19 +33,19 @@ export default function Home() {
   };
 
   // 삭제함수
-  const deleteMemo = async (id) => {
+  const deleteMemo = async (id: number) => {
     await fetch(`${API_URL}/${id}`, { method: "DELETE" });
     setMemos(memos.filter((memo) => memo.id !== id));
   };
 
   // 수정 시작
-  const startEdit = (memo) => {
+  const startEdit = (memo: Memo) => {
     setEditingId(memo.id);
     setEditingText(memo.text);
   };
 
   // 수정 저장
-  const saveEdit = async (id) => {
+  const saveEdit = async (id: number) => {
     const res = await fetch(`${API_URL}/${id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
