@@ -1,6 +1,8 @@
 "use client"
 
+import { useState } from "react";
 import { Memo } from "@/types/memo";
+import ImageModal from "@/components/ImageModal";
 
 // MemoItem이 받는 props의 타입 정의
 interface MemoItemProps {
@@ -11,6 +13,7 @@ interface MemoItemProps {
     saveEdit: (id: number) => void;
     cancelEdit: () => void;
     deleteMemo: (id: number) => void;
+    deleteImage: (imageId: number) => void;
     startEdit: (memo: Memo) => void;
 }
 
@@ -22,8 +25,11 @@ export default function MemoItem({
     saveEdit,
     cancelEdit,
     deleteMemo,
+    deleteImage,
     startEdit,
 }: MemoItemProps) {
+    const [modalIndex, setModalIndex] = useState<number | null>(null);
+
     return (
         <li className="flex gap-2">
             {editingId === memo.id ? (
@@ -39,10 +45,36 @@ export default function MemoItem({
                 </>
             ) : (
                 <>
-                    <span className="flex-1">{memo.text}</span>
+                    <div className="flex-1">
+                        <span>{memo.text}</span>
+                        {memo.memoImages.length > 0 && (
+                            <div className="flex gap-1 mt-1">
+                                {memo.memoImages.map((image, index) => (
+                                    <img
+                                        key={image.id}
+                                        src={image.url}
+                                        alt=""
+                                        className="w-16 h-16 object-cover rounded cursor-pointer"
+                                        onClick={() => setModalIndex(index)}
+                                    />
+                                ))}
+                            </div>
+                        )}
+                    </div>
                     <button onClick={() => startEdit(memo)} className="text-blue-500 hover:text-blue-700">수정</button>
                     <button onClick={() => deleteMemo(memo.id)} className="text-red-500 hover:text-red-700">삭제</button>
                 </>
+            )}
+            {modalIndex !== null && (
+                <ImageModal
+                    images={memo.memoImages}
+                    selectedIndex={modalIndex}
+                    onClose={() => setModalIndex(null)}
+                    onDelete={(imageId) => {
+                        deleteImage(imageId);
+                        setModalIndex(null);
+                    }}
+                />
             )}
         </li>
     )
