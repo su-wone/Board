@@ -27,5 +27,5 @@ export default function Modal({ isOpen, onClose, children }: ModalProps) {
                 {children}
             </div>
         </div>
-    )
+    );
 }

@@ -1,7 +1,8 @@
 "use client"
 
 import { Memo } from "@/types/memo";
-import Modal from "@/components/Modal";
+import Modal from "@/components/atoms/Modal";
+import Button from "@/components/atoms/Button";
 
 interface DeleteModalProps {
     memo: Memo | null;
@@ -15,9 +16,9 @@ export default function DeleteModal({ memo, onClose, onDelete }: DeleteModalProp
             <h2 className="text-lg font-bold mb-4">메모 삭제</h2>
             <p className="mb-4">정말 삭제하시겠습니까?</p>
             <div className="flex justify-end gap-2">
-                <button onClick={onClose} className="px-4 py-2 text-gray-500 hover:text-gray-700">취소</button>
-                <button onClick={() => memo && onDelete(memo.id)} className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600">삭제</button>
+                <Button variant="text" onClick={onClose}>취소</Button>
+                <Button variant="danger" onClick={() => memo && onDelete(memo.id)}>삭제</Button>
             </div>
         </Modal>
-    )
+    );
 }
