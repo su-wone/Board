@@ -2,11 +2,12 @@
 
 import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
 import { createMemo } from "@/api/memoApi";
-import Input from "@/components/atoms/Input";
-import Button from "@/components/atoms/Button";
 import ImageUploader from "@/components/molecules/ImageUploader";
 import ImagePreviewList from "@/components/molecules/ImagePreviewList";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
 
 export default function MemoForm() {
     const queryClient = useQueryClient();
@@ -15,7 +16,11 @@ export default function MemoForm() {
 
     const { mutate: addMemo } = useMutation({
         mutationFn: ({ text, files }: { text: string; files: File[] }) => createMemo(text, files),
-        onSuccess: () => queryClient.invalidateQueries({ queryKey: ["memos"] }),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["memos"] });
+            toast.success("메모가 추가되었습니다");
+        },
+        onError: () => toast.error("메모 추가 실패"),
     });
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -44,11 +49,12 @@ export default function MemoForm() {
     return (
         <form className="mb-6 space-y-3" onSubmit={handleSubmit}>
             <div className="flex gap-2">
-                <Input
+                <Textarea
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
                     placeholder="내용을 입력하세요"
                     className="flex-1"
+                    rows={3}
                 />
                 <Button type="submit">추가</Button>
             </div>

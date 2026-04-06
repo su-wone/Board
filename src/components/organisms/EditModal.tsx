@@ -4,28 +4,42 @@ import { useState, useEffect } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useModalStore } from "@/store/modalStore";
 import { updateMemo, deleteImageById, addImages as addImagesApi } from "@/api/memoApi";
-
-import Modal from "@/components/atoms/Modal";
-import Input from "@/components/atoms/Input";
-import Button from "@/components/atoms/Button";
 import ImageUploader from "@/components/molecules/ImageUploader";
 import ImagePreviewList from "@/components/molecules/ImagePreviewList";
+import {
+    Dialog,
+    DialogContent,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 export default function EditModal() {
     const queryClient = useQueryClient();
     const { editingMemo, setEditingMemo } = useModalStore();
     const [text, setText] = useState(editingMemo?.text ?? "");
     const [newImages, setNewImages] = useState<File[]>([]);
-    const [deletedImageIds, setDeletedImageIds] = useState<number[]>([]);
 
     const { mutate: saveEdit } = useMutation({
-        mutationFn: async ({ id, text, deleteIds }: { id: number; text: string; deleteIds: number[] }) => {
-            await Promise.all(deleteIds.map(deleteImageById));
-            return updateMemo(id, text);
-        },
+        mutationFn: ({ id, text }: { id: number; text: string }) => updateMemo(id, text),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ["memos"] });
             setEditingMemo(null);
+        },
+    });
+
+    const { mutate: deleteImage } = useMutation({
+        mutationFn: deleteImageById,
+        onSuccess: (_data, imageId) => {
+            queryClient.invalidateQueries({ queryKey: ["memos"] });
+            if (editingMemo) {
+                setEditingMemo({
+                    ...editingMemo,
+                    memoImages: editingMemo.memoImages.filter((img) => img.id !== imageId),
+                });
+            }
         },
     });
 
@@ -37,12 +51,9 @@ export default function EditModal() {
     useEffect(() => {
         setText(editingMemo?.text ?? "");
         setNewImages([]);
-        setDeletedImageIds([]);
     }, [editingMemo]);
 
-    const visibleMemoImages = (editingMemo?.memoImages ?? []).filter(
-        (img) => !deletedImageIds.includes(img.id)
-    );
+    const currentImageCount = editingMemo?.memoImages.length ?? 0;
 
     const handleNewImages = (files: File[]) => {
         setNewImages([...newImages, ...files]);
@@ -50,16 +61,16 @@ export default function EditModal() {
 
     const handleSave = () => {
         if (!editingMemo) return;
-        saveEdit({ id: editingMemo.id, text, deleteIds: deletedImageIds });
+        saveEdit({ id: editingMemo.id, text });
         if (newImages.length > 0) {
             addImages({ memoId: editingMemo.id, files: newImages });
         }
     };
 
-    const existingImages = visibleMemoImages.map((img) => ({
+    const existingImages = (editingMemo?.memoImages ?? []).map((img) => ({
         src: img.url,
         alt: `memo-image-${img.id}`,
-        onRemove: () => setDeletedImageIds([...deletedImageIds, img.id]),
+        onRemove: () => deleteImage(img.id),
     }));
 
     const newPreviewImages = newImages.map((file, index) => ({
@@ -69,39 +80,47 @@ export default function EditModal() {
     }));
 
     return (
-        <Modal isOpen={editingMemo !== null} onClose={() => setEditingMemo(null)}>
-            <h2 className="text-lg font-bold mb-4">메모 수정</h2>
-            <Input
-                value={text}
-                onChange={(e) => setText(e.target.value)}
-                className="w-full mb-4"
-            />
+        <Dialog
+            open={editingMemo !== null}
+            onOpenChange={(open) => !open && setEditingMemo(null)}
+        >
+            <DialogContent>
+                <DialogHeader>
+                    <DialogTitle>메모 수정</DialogTitle>
+                </DialogHeader>
 
-            {existingImages.length > 0 && (
-                <div className="mb-4">
-                    <p className="text-sm text-gray-500 mb-2">기존 이미지</p>
-                    <ImagePreviewList images={existingImages} />
-                </div>
-            )}
-
-            <div className="mb-4">
-                <ImageUploader
-                    currentCount={visibleMemoImages.length + newImages.length}
-                    maxCount={5}
-                    onChange={handleNewImages}
+                <Input
+                    value={text}
+                    onChange={(e) => setText(e.target.value)}
+                    className="w-full mb-4"
                 />
-            </div>
 
-            {newPreviewImages.length > 0 && (
-                <div className="flex gap-2 flex-wrap mb-4">
-                    <ImagePreviewList images={newPreviewImages} />
+                {existingImages.length > 0 && (
+                    <div className="mb-4">
+                        <p className="text-sm text-gray-500 mb-2">기존 이미지</p>
+                        <ImagePreviewList images={existingImages} />
+                    </div>
+                )}
+
+                <div className="mb-4">
+                    <ImageUploader
+                        currentCount={currentImageCount + newImages.length}
+                        maxCount={5}
+                        onChange={handleNewImages}
+                    />
                 </div>
-            )}
 
-            <div className="flex justify-end gap-2">
-                <Button variant="text" onClick={() => setEditingMemo(null)}>취소</Button>
-                <Button onClick={handleSave}>저장</Button>
-            </div>
-        </Modal>
+                {newPreviewImages.length > 0 && (
+                    <div className="flex gap-2 flex-wrap mb-4">
+                        <ImagePreviewList images={newPreviewImages} />
+                    </div>
+                )}
+
+                <DialogFooter>
+                    <Button variant="ghost" onClick={() => setEditingMemo(null)}>취소</Button>
+                    <Button onClick={handleSave}>저장</Button>
+                </DialogFooter>
+            </DialogContent>
+        </Dialog>
     );
 }

@@ -1,6 +1,6 @@
 "use client"
 
-import Button from "@/components/atoms/Button";
+import { Button } from "@/components/ui/button";
 
 interface ImageThumbnailProps {
     src: string;
@@ -16,7 +16,15 @@ export default function ImageThumbnail({ src, alt, size = "sm", onRemove }: Imag
         <div className={`relative ${sizeClass}`}>
             <img src={src} alt={alt} className="w-full h-full object-cover rounded border" />
             {onRemove && (
-                <Button variant="icon" onClick={onRemove}>x</Button>
+                <Button
+                    type="button"
+                    size="icon-xs"
+                    variant="destructive"
+                    onClick={onRemove}
+                    className="absolute -top-2 -right-2"
+                >
+                    x
+                </Button>
             )}
         </div>
     );

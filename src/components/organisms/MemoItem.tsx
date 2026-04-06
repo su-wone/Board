@@ -2,8 +2,9 @@
 
 import { Memo } from "@/types/memo";
 import { useModalStore } from "@/store/modalStore";
-import Button from "@/components/atoms/Button";
 import ImagePreviewList from "@/components/molecules/ImagePreviewList";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 interface MemoItemProps {
     memo: Memo;
@@ -18,13 +19,15 @@ export default function MemoItem({ memo }: MemoItemProps) {
     }));
 
     return (
-        <li className="border border-gray-200 rounded-lg p-3 space-y-2">
-            <div className="flex gap-2">
-                <span className="flex-1">{memo.text}</span>
-                <Button variant="text" onClick={() => setEditingMemo(memo)} className="!p-0 text-blue-500 hover:text-blue-700">수정</Button>
-                <Button variant="text" onClick={() => setDeleteTargetMemo(memo)} className="!p-0">삭제</Button>
-            </div>
-            <ImagePreviewList images={images} size="md" />
-        </li>
+        <Card>
+            <CardContent className="space-y-2">
+                <div className="flex gap-2 items-center">
+                    <span className="flex-1">{memo.text}</span>
+                    <Button variant="ghost" size="sm" onClick={() => setEditingMemo(memo)}>수정</Button>
+                    <Button variant="destructive" size="sm" onClick={() => setDeleteTargetMemo(memo)}>삭제</Button>
+                </div>
+                <ImagePreviewList images={images} size="md" />
+            </CardContent>
+        </Card>
     );
 }
