@@ -1,24 +1,21 @@
 "use client"
 
-import { Memo } from "@/types/memo";
+import { useQuery } from "@tanstack/react-query";
+import { fetchMemos } from "@/api/memoApi";
 import MemoItem from "@/components/organisms/MemoItem";
 
-interface MemoListProps {
-    memos: Memo[];
-    onEdit: (memo: Memo) => void;
-    onDelete: (memo: Memo) => void;
-}
+export default function MemoList() {
+    const { data: memos = [], isLoading } = useQuery({
+        queryKey: ["memos"],
+        queryFn: fetchMemos,
+    });
 
-export default function MemoList({ memos, onEdit, onDelete }: MemoListProps) {
+    if (isLoading) return <p>로딩 중...</p>;
+
     return (
         <ul className="space-y-4">
             {memos.map((memo) => (
-                <MemoItem
-                    key={memo.id}
-                    memo={memo}
-                    onEdit={onEdit}
-                    onDelete={onDelete}
-                />
+                <MemoItem key={memo.id} memo={memo} />
             ))}
         </ul>
     );

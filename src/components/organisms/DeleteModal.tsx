@@ -1,23 +1,30 @@
 "use client"
 
-import { Memo } from "@/types/memo";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useModalStore } from "@/store/modalStore";
+import { deleteMemoById } from "@/api/memoApi";
 import Modal from "@/components/atoms/Modal";
 import Button from "@/components/atoms/Button";
 
-interface DeleteModalProps {
-    memo: Memo | null;
-    onClose: () => void;
-    onDelete: (id: number) => void;
-}
+export default function DeleteModal() {
+    const queryClient = useQueryClient();
+    const { deleteTargetMemo, setDeleteTargetMemo } = useModalStore();
 
-export default function DeleteModal({ memo, onClose, onDelete }: DeleteModalProps) {
+    const { mutate: deleteMemo } = useMutation({
+        mutationFn: deleteMemoById,
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["memos"] });
+            setDeleteTargetMemo(null);
+        },
+    });
+
     return (
-        <Modal isOpen={memo !== null} onClose={onClose}>
+        <Modal isOpen={deleteTargetMemo !== null} onClose={() => setDeleteTargetMemo(null)}>
             <h2 className="text-lg font-bold mb-4">메모 삭제</h2>
             <p className="mb-4">정말 삭제하시겠습니까?</p>
             <div className="flex justify-end gap-2">
-                <Button variant="text" onClick={onClose}>취소</Button>
-                <Button variant="danger" onClick={() => memo && onDelete(memo.id)}>삭제</Button>
+                <Button variant="text" onClick={() => setDeleteTargetMemo(null)}>취소</Button>
+                <Button variant="danger" onClick={() => deleteTargetMemo && deleteMemo(deleteTargetMemo.id)}>삭제</Button>
             </div>
         </Modal>
     );

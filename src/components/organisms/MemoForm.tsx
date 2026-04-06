@@ -1,22 +1,27 @@
 "use client"
 
 import { useState } from "react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { createMemo } from "@/api/memoApi";
 import Input from "@/components/atoms/Input";
 import Button from "@/components/atoms/Button";
 import ImageUploader from "@/components/molecules/ImageUploader";
 import ImagePreviewList from "@/components/molecules/ImagePreviewList";
 
-interface MemoFormProps {
-    onSubmit: (text: string, images: File[]) => void;
-}
-
-export default function MemoForm({ onSubmit }: MemoFormProps) {
+export default function MemoForm() {
+    const queryClient = useQueryClient();
     const [input, setInput] = useState("");
     const [images, setImages] = useState<File[]>([]);
 
-    const handleSubmit = () => {
+    const { mutate: addMemo } = useMutation({
+        mutationFn: ({ text, files }: { text: string; files: File[] }) => createMemo(text, files),
+        onSuccess: () => queryClient.invalidateQueries({ queryKey: ["memos"] }),
+    });
+
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
         if (!input.trim() && images.length === 0) return;
-        onSubmit(input, images);
+        addMemo({ text: input, files: images });
         setInput("");
         setImages([]);
     };
@@ -37,7 +42,7 @@ export default function MemoForm({ onSubmit }: MemoFormProps) {
     }));
 
     return (
-        <div className="mb-6 space-y-3">
+        <form className="mb-6 space-y-3" onSubmit={handleSubmit}>
             <div className="flex gap-2">
                 <Input
                     value={input}
@@ -45,7 +50,7 @@ export default function MemoForm({ onSubmit }: MemoFormProps) {
                     placeholder="내용을 입력하세요"
                     className="flex-1"
                 />
-                <Button onClick={handleSubmit}>추가</Button>
+                <Button type="submit">추가</Button>
             </div>
             <ImageUploader
                 currentCount={images.length}
@@ -53,6 +58,6 @@ export default function MemoForm({ onSubmit }: MemoFormProps) {
                 onChange={handleNewImages}
             />
             <ImagePreviewList images={previewImages} />
-        </div>
+        </form>
     );
 }

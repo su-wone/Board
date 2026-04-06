@@ -1,48 +1,65 @@
 "use client"
 
 import { useState, useEffect } from "react";
-import { Memo } from "@/types/memo";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useModalStore } from "@/store/modalStore";
+import { updateMemo, deleteImageById, addImages as addImagesApi } from "@/api/memoApi";
+
 import Modal from "@/components/atoms/Modal";
 import Input from "@/components/atoms/Input";
 import Button from "@/components/atoms/Button";
 import ImageUploader from "@/components/molecules/ImageUploader";
 import ImagePreviewList from "@/components/molecules/ImagePreviewList";
 
-interface EditModalProps {
-    memo: Memo | null;
-    onClose: () => void;
-    onSave: (id: number, text: string) => void;
-    onDeleteImage: (imageId: number) => void;
-    onAddImages: (memoId: number, files: File[]) => void;
-}
-
-export default function EditModal({ memo, onClose, onSave, onDeleteImage, onAddImages }: EditModalProps) {
-    const [text, setText] = useState(memo?.text ?? "");
+export default function EditModal() {
+    const queryClient = useQueryClient();
+    const { editingMemo, setEditingMemo } = useModalStore();
+    const [text, setText] = useState(editingMemo?.text ?? "");
     const [newImages, setNewImages] = useState<File[]>([]);
+    const [deletedImageIds, setDeletedImageIds] = useState<number[]>([]);
+
+    const { mutate: saveEdit } = useMutation({
+        mutationFn: async ({ id, text, deleteIds }: { id: number; text: string; deleteIds: number[] }) => {
+            await Promise.all(deleteIds.map(deleteImageById));
+            return updateMemo(id, text);
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["memos"] });
+            setEditingMemo(null);
+        },
+    });
+
+    const { mutate: addImages } = useMutation({
+        mutationFn: ({ memoId, files }: { memoId: number; files: File[] }) => addImagesApi(memoId, files),
+        onSuccess: () => queryClient.invalidateQueries({ queryKey: ["memos"] }),
+    });
 
     useEffect(() => {
-        setText(memo?.text ?? "");
+        setText(editingMemo?.text ?? "");
         setNewImages([]);
-    }, [memo]);
+        setDeletedImageIds([]);
+    }, [editingMemo]);
 
-    const currentImageCount = memo?.memoImages.length ?? 0;
+    const visibleMemoImages = (editingMemo?.memoImages ?? []).filter(
+        (img) => !deletedImageIds.includes(img.id)
+    );
 
     const handleNewImages = (files: File[]) => {
         setNewImages([...newImages, ...files]);
     };
 
     const handleSave = () => {
-        if (!memo) return;
-        onSave(memo.id, text);
+        if (!editingMemo) return;
+        saveEdit({ id: editingMemo.id, text, deleteIds: deletedImageIds });
         if (newImages.length > 0) {
-            onAddImages(memo.id, newImages);
+            addImages({ memoId: editingMemo.id, files: newImages });
         }
     };
 
-    const existingImages = (memo?.memoImages ?? []).map((img) => ({
+    const existingImages = visibleMemoImages.map((img) => ({
         src: img.url,
         alt: `memo-image-${img.id}`,
-        onRemove: () => onDeleteImage(img.id),
+        onRemove: () => setDeletedImageIds([...deletedImageIds, img.id]),
     }));
 
     const newPreviewImages = newImages.map((file, index) => ({
@@ -52,7 +69,7 @@ export default function EditModal({ memo, onClose, onSave, onDeleteImage, onAddI
     }));
 
     return (
-        <Modal isOpen={memo !== null} onClose={onClose}>
+        <Modal isOpen={editingMemo !== null} onClose={() => setEditingMemo(null)}>
             <h2 className="text-lg font-bold mb-4">메모 수정</h2>
             <Input
                 value={text}
@@ -69,7 +86,7 @@ export default function EditModal({ memo, onClose, onSave, onDeleteImage, onAddI
 
             <div className="mb-4">
                 <ImageUploader
-                    currentCount={currentImageCount + newImages.length}
+                    currentCount={visibleMemoImages.length + newImages.length}
                     maxCount={5}
                     onChange={handleNewImages}
                 />
@@ -82,7 +99,7 @@ export default function EditModal({ memo, onClose, onSave, onDeleteImage, onAddI
             )}
 
             <div className="flex justify-end gap-2">
-                <Button variant="text" onClick={onClose}>취소</Button>
+                <Button variant="text" onClick={() => setEditingMemo(null)}>취소</Button>
                 <Button onClick={handleSave}>저장</Button>
             </div>
         </Modal>
