@@ -12,4 +12,9 @@ export const mockCards: Card[] = [
 
   { id: 9,  key: "BOARD-9",  title: "칸반 보드 페이지",      workflowId: 1, sprintId: 3, priority: "high",   order: 1, storyPoint: 8 },
   { id: 10, key: "BOARD-10", title: "스프린트 목록 페이지",  workflowId: 1, sprintId: 3, priority: "high",   order: 2, storyPoint: 5 },
+
+  // Backlog (sprintId: null) — 아직 스프린트에 배정되지 않은 카드들
+  { id: 11, key: "BOARD-11", title: "다크 모드 지원",        workflowId: 1, sprintId: null, priority: "low",    order: 1, storyPoint: 3 },
+  { id: 12, key: "BOARD-12", title: "알림 설정 페이지",      workflowId: 1, sprintId: null, priority: "medium", order: 2, storyPoint: 5 },
+  { id: 13, key: "BOARD-13", title: "검색 기능 추가",        workflowId: 1, sprintId: null, priority: "medium", order: 3, storyPoint: 8 },
 ];
