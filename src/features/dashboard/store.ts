@@ -1,8 +1,13 @@
 import { create } from "zustand";
 import { Card } from "@/features/dashboard/types/card";
 import { mockCards } from "@/features/dashboard/mocks/cards.mock";
+import { mockSprints } from "@/features/dashboard/mocks/sprints.mock";
 
 const DEFAULT_WORKFLOW_ID = 1; // "To Do"
+const BACKLOG_SECTION_ID = "backlog";
+
+export const sprintSectionId = (sprintId: number) => `sprint-${sprintId}`;
+export const backlogSectionId = () => BACKLOG_SECTION_ID;
 
 interface AddCardInput {
   title: string;
@@ -12,7 +17,16 @@ interface AddCardInput {
 interface DashboardStore {
   cards: Card[];
   addCard: (input: AddCardInput) => void;
+
+  collapsedSectionIds: Set<string>;
+  toggleSection: (id: string) => void;
 }
+
+// 초기 접힘 상태: 모든 섹션을 접은 채로 시작
+const initialCollapsed = new Set<string>([
+  ...mockSprints.map((s) => sprintSectionId(s.id)),
+  backlogSectionId(),
+]);
 
 export const useDashboardStore = create<DashboardStore>((set) => ({
   cards: mockCards,
@@ -36,5 +50,14 @@ export const useDashboardStore = create<DashboardStore>((set) => ({
       };
 
       return { cards: [...state.cards, newCard] };
+    }),
+
+  collapsedSectionIds: initialCollapsed,
+  toggleSection: (id) =>
+    set((state) => {
+      const next = new Set(state.collapsedSectionIds);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return { collapsedSectionIds: next };
     }),
 }));

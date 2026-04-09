@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ChevronRight } from "lucide-react";
 import { Sprint } from "@/features/dashboard/types/sprint";
 import SprintDateRange from "@/features/dashboard/components/atoms/SprintDateRange";
 import StatusBadge from "@/features/dashboard/components/atoms/StatusBadge";
@@ -6,12 +7,32 @@ import StatusBadge from "@/features/dashboard/components/atoms/StatusBadge";
 interface Props {
   sprint: Sprint;
   cardCount: number;
+  isCollapsed: boolean;
+  onToggle: () => void;
+  contentId: string;
 }
 
-export default function SprintSectionHeader({ sprint, cardCount }: Props) {
+export default function SprintSectionHeader({
+  sprint,
+  cardCount,
+  isCollapsed,
+  onToggle,
+  contentId,
+}: Props) {
   return (
     <div className="flex items-center justify-between border-b border-gray-200 pb-2">
       <div className="flex items-center gap-3">
+        <button
+          type="button"
+          onClick={onToggle}
+          aria-expanded={!isCollapsed}
+          aria-controls={contentId}
+          className="flex h-5 w-5 items-center justify-center rounded text-gray-500 hover:bg-gray-100"
+        >
+          <ChevronRight
+            className={`h-4 w-4 transition-transform ${isCollapsed ? "" : "rotate-90"}`}
+          />
+        </button>
         <h2 className="text-base font-semibold text-gray-900">{sprint.title}</h2>
         <SprintDateRange startDate={sprint.startDate} endDate={sprint.endDate} />
         <StatusBadge status={sprint.status} />
