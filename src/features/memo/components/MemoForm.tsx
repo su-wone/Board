@@ -3,9 +3,9 @@
 import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { createMemo } from "@/api/memoApi";
-import ImageUploader from "@/components/molecules/ImageUploader";
-import ImagePreviewList from "@/components/molecules/ImagePreviewList";
+import { createMemo } from "@/features/memo/api";
+import ImageUploader from "@/features/memo/components/ImageUploader";
+import ImagePreviewList from "@/features/memo/components/ImagePreviewList";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 

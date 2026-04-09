@@ -1,9 +1,9 @@
 "use client"
 
-import MemoForm from "@/components/organisms/MemoForm";
-import MemoList from "@/components/organisms/MemoList";
-import EditModal from "@/components/organisms/EditModal";
-import DeleteModal from "@/components/organisms/DeleteModal";
+import MemoForm from "@/features/memo/components/MemoForm";
+import MemoList from "@/features/memo/components/MemoList";
+import EditModal from "@/features/memo/components/EditModal";
+import DeleteModal from "@/features/memo/components/DeleteModal";
 
 export default function BoardTemplate() {
     return (

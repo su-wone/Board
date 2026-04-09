@@ -1,8 +1,8 @@
 "use client"
 
-import { Memo } from "@/types/memo";
-import { useModalStore } from "@/store/modalStore";
-import ImagePreviewList from "@/components/molecules/ImagePreviewList";
+import { Memo } from "@/features/memo/types";
+import { useModalStore } from "@/features/memo/store";
+import ImagePreviewList from "@/features/memo/components/ImagePreviewList";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 

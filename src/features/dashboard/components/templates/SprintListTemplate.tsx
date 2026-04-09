@@ -1,5 +1,5 @@
-import { Sprint } from "@/types/sprint";
-import SprintList from "@/components/organisms/SprintList";
+import { Sprint } from "@/features/dashboard/types/sprint";
+import SprintList from "@/features/dashboard/components/organisms/SprintList";
 
 interface Props {
   sprints: Sprint[];
@@ -8,7 +8,7 @@ interface Props {
 export default function SprintListTemplate({ sprints }: Props) {
   return (
     <main className="p-6">
-      <h1 className="mb-6 text-2xl font-bold">Sprints</h1>
+      <h1 className="mb-6 text-2xl font-bold">Sprint</h1>
       <SprintList sprints={sprints} />
     </main>
   );

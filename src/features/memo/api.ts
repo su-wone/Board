@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Memo } from "@/types/memo";
+import { Memo } from "@/features/memo/types";
 
 const api = axios.create({
   baseURL: "http://localhost:3000/memos",

@@ -1,7 +1,7 @@
 import Link from "next/link";
-import { Sprint } from "@/types/sprint";
-import StatusBadge from "@/components/atoms/StatusBadge";
-import SprintDateRange from "@/components/atoms/SprintDateRange";
+import { Sprint } from "@/features/dashboard/types/sprint";
+import StatusBadge from "@/features/dashboard/components/atoms/StatusBadge";
+import SprintDateRange from "@/features/dashboard/components/atoms/SprintDateRange";
 
 interface Props {
   sprint: Sprint;

@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { Memo } from "@/types/memo";
+import { Memo } from "@/features/memo/types";
 
 interface ModalState {
   editingMemo: Memo | null;

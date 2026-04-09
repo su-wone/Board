@@ -1,4 +1,4 @@
-import { Card } from "@/types/card";
+import { Card } from "@/features/dashboard/types/card";
 
 export const mockCards: Card[] = [
   { id: 1, key: "BOARD-1", title: "로그인 페이지 만들기", workflowId: 1, sprintId: 2, priority: "high", order: 1, storyPoint: 5 },

@@ -1,6 +1,6 @@
-import { Card } from "@/types/card";
-import CardKey from "@/components/atoms/CardKey";
-import PriorityBadge from "@/components/atoms/PriorityBadge";
+import { Card } from "@/features/dashboard/types/card";
+import CardKey from "@/features/dashboard/components/atoms/CardKey";
+import PriorityBadge from "@/features/dashboard/components/atoms/PriorityBadge";
 
 interface Props {
   card: Card;

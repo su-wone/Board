@@ -2,10 +2,10 @@
 
 import { useState, useEffect } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useModalStore } from "@/store/modalStore";
-import { updateMemo, deleteImageById, addImages as addImagesApi } from "@/api/memoApi";
-import ImageUploader from "@/components/molecules/ImageUploader";
-import ImagePreviewList from "@/components/molecules/ImagePreviewList";
+import { useModalStore } from "@/features/memo/store";
+import { updateMemo, deleteImageById, addImages as addImagesApi } from "@/features/memo/api";
+import ImageUploader from "@/features/memo/components/ImageUploader";
+import ImagePreviewList from "@/features/memo/components/ImagePreviewList";
 import {
     Dialog,
     DialogContent,

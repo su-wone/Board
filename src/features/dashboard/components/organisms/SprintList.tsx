@@ -1,5 +1,5 @@
-import { Sprint } from "@/types/sprint";
-import SprintListItem from "@/components/molecules/SprintListItem";
+import { Sprint } from "@/features/dashboard/types/sprint";
+import SprintListItem from "@/features/dashboard/components/molecules/SprintListItem";
 
 interface Props {
   sprints: Sprint[];

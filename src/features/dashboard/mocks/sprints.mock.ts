@@ -1,4 +1,4 @@
-import { Sprint } from "@/types/sprint";
+import { Sprint } from "@/features/dashboard/types/sprint";
 
 export const mockSprints: Sprint[] = [
   {

@@ -1,8 +1,8 @@
 "use client"
 
 import { useQuery } from "@tanstack/react-query";
-import { fetchMemos } from "@/api/memoApi";
-import MemoItem from "@/components/organisms/MemoItem";
+import { fetchMemos } from "@/features/memo/api";
+import MemoItem from "@/features/memo/components/MemoItem";
 
 export default function MemoList() {
     const { data: memos = [], isLoading } = useQuery({

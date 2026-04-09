@@ -2,8 +2,8 @@
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { useModalStore } from "@/store/modalStore";
-import { deleteMemoById } from "@/api/memoApi";
+import { useModalStore } from "@/features/memo/store";
+import { deleteMemoById } from "@/features/memo/api";
 import {
     AlertDialog,
     AlertDialogAction,

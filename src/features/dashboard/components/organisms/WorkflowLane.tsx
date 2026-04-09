@@ -1,7 +1,7 @@
-import { Card } from "@/types/card";
-import { Workflow } from "@/types/workflow";
-import CardItem from "@/components/molecules/CardItem";
-import WorkflowHeader from "@/components/molecules/WorkflowHeader";
+import { Card } from "@/features/dashboard/types/card";
+import { Workflow } from "@/features/dashboard/types/workflow";
+import CardItem from "@/features/dashboard/components/molecules/CardItem";
+import WorkflowHeader from "@/features/dashboard/components/molecules/WorkflowHeader";
 
 interface Props {
   workflow: Workflow;

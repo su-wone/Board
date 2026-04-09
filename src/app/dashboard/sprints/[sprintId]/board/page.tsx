@@ -1,8 +1,8 @@
 import { notFound } from "next/navigation";
-import WorkflowBoardTemplate from "@/components/templates/WorkflowBoardTemplate";
-import { mockSprints } from "@/mocks/sprints.mock";
-import { mockWorkflows } from "@/mocks/workflows.mock";
-import { mockCards } from "@/mocks/cards.mock";
+import WorkflowBoardTemplate from "@/features/dashboard/components/templates/WorkflowBoardTemplate";
+import { mockSprints } from "@/features/dashboard/mocks/sprints.mock";
+import { mockWorkflows } from "@/features/dashboard/mocks/workflows.mock";
+import { mockCards } from "@/features/dashboard/mocks/cards.mock";
 
 interface Props {
   params: Promise<{ sprintId: string }>;

@@ -1,10 +1,10 @@
 import Link from "next/link";
-import { Card } from "@/types/card";
-import { Sprint } from "@/types/sprint";
-import { Workflow } from "@/types/workflow";
-import SprintDateRange from "@/components/atoms/SprintDateRange";
-import StatusBadge from "@/components/atoms/StatusBadge";
-import WorkflowBoard from "@/components/organisms/WorkflowBoard";
+import { Card } from "@/features/dashboard/types/card";
+import { Sprint } from "@/features/dashboard/types/sprint";
+import { Workflow } from "@/features/dashboard/types/workflow";
+import SprintDateRange from "@/features/dashboard/components/atoms/SprintDateRange";
+import StatusBadge from "@/features/dashboard/components/atoms/StatusBadge";
+import WorkflowBoard from "@/features/dashboard/components/organisms/WorkflowBoard";
 
 interface Props {
   sprint: Sprint;

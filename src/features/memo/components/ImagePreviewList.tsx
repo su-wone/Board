@@ -1,6 +1,6 @@
 "use client"
 
-import ImageThumbnail from "@/components/atoms/ImageThumbnail";
+import ImageThumbnail from "@/features/memo/components/ImageThumbnail";
 
 interface ImagePreviewListProps {
     images: { src: string; alt: string; onRemove?: () => void }[];

@@ -1,5 +1,5 @@
 import "./globals.css";
-import QueryProvider from "@/components/QueryProvider";
+import QueryProvider from "@/shared/providers/QueryProvider";
 import { Toaster } from "@/components/ui/sonner";
 import { Geist } from "next/font/google";
 import { cn } from "@/lib/utils";

@@ -1,6 +1,6 @@
-import { Card } from "@/types/card";
-import { Workflow } from "@/types/workflow";
-import WorkflowLane from "@/components/organisms/WorkflowLane";
+import { Card } from "@/features/dashboard/types/card";
+import { Workflow } from "@/features/dashboard/types/workflow";
+import WorkflowLane from "@/features/dashboard/components/organisms/WorkflowLane";
 
 interface Props {
   workflows: Workflow[];
