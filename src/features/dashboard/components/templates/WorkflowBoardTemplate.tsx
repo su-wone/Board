@@ -1,18 +1,30 @@
+"use client";
+
 import Link from "next/link";
-import { Card } from "@/features/dashboard/types/card";
-import { Sprint } from "@/features/dashboard/types/sprint";
-import { Workflow } from "@/features/dashboard/types/workflow";
+import { mockSprints } from "@/features/dashboard/mocks/sprints.mock";
+import { mockWorkflows } from "@/features/dashboard/mocks/workflows.mock";
+import { useDashboardStore } from "@/features/dashboard/store";
 import SprintDateRange from "@/features/dashboard/components/atoms/SprintDateRange";
 import StatusBadge from "@/features/dashboard/components/atoms/StatusBadge";
 import WorkflowBoard from "@/features/dashboard/components/organisms/WorkflowBoard";
 
 interface Props {
-  sprint: Sprint;
-  workflows: Workflow[];
-  cards: Card[];
+  sprintId: number;
 }
 
-export default function WorkflowBoardTemplate({ sprint, workflows, cards }: Props) {
+export default function WorkflowBoardTemplate({ sprintId }: Props) {
+  const sprint = mockSprints.find((s) => s.id === sprintId);
+  const allCards = useDashboardStore((s) => s.cards);
+  const cards = allCards.filter((c) => c.sprintId === sprintId);
+
+  if (!sprint) {
+    return (
+      <main className="p-6">
+        <p className="text-sm text-gray-500">스프린트를 찾을 수 없습니다.</p>
+      </main>
+    );
+  }
+
   return (
     <main className="p-6">
       <div className="mb-6 flex flex-col gap-1">
@@ -25,7 +37,7 @@ export default function WorkflowBoardTemplate({ sprint, workflows, cards }: Prop
           <StatusBadge status={sprint.status} />
         </div>
       </div>
-      <WorkflowBoard workflows={workflows} cards={cards} />
+      <WorkflowBoard workflows={mockWorkflows} cards={cards} />
     </main>
   );
 }

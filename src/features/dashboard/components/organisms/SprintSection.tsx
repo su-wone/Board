@@ -2,6 +2,7 @@ import { Card } from "@/features/dashboard/types/card";
 import { Sprint } from "@/features/dashboard/types/sprint";
 import SprintSectionHeader from "@/features/dashboard/components/molecules/SprintSectionHeader";
 import CardItem from "@/features/dashboard/components/molecules/CardItem";
+import CardCreateInput from "@/features/dashboard/components/molecules/CardCreateInput";
 
 interface Props {
   sprint: Sprint;
@@ -14,15 +15,14 @@ export default function SprintSection({ sprint, cards }: Props) {
   return (
     <section className="flex flex-col gap-3">
       <SprintSectionHeader sprint={sprint} cardCount={cards.length} />
-      {sorted.length === 0 ? (
-        <p className="text-sm text-gray-400">카드가 없습니다.</p>
-      ) : (
-        <div className="flex flex-col gap-2">
-          {sorted.map((card) => (
-            <CardItem key={card.id} card={card} />
-          ))}
-        </div>
-      )}
+      <div className="flex flex-col gap-2">
+        {sorted.length === 0 ? (
+          <p className="text-sm text-gray-400">카드가 없습니다.</p>
+        ) : (
+          sorted.map((card) => <CardItem key={card.id} card={card} />)
+        )}
+        <CardCreateInput sprintId={sprint.id} />
+      </div>
     </section>
   );
 }
