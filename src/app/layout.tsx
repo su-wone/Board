@@ -1,5 +1,4 @@
 import "./globals.css";
-import QueryProvider from "@/shared/providers/QueryProvider";
 import { Toaster } from "@/components/ui/sonner";
 import { Geist } from "next/font/google";
 import { cn } from "@/lib/utils";
@@ -15,7 +14,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html className={cn("font-sans", geist.variable)}>
       <body>
-        <QueryProvider>{children}</QueryProvider>
+        {children}
         <Toaster />
       </body>
     </html>
