@@ -1,5 +1,5 @@
-import BoardTemplate from "@/features/memo/components/BoardTemplate";
+import BacklogTemplate from "@/components/templates/BacklogTemplate";
 
 export default function Home() {
-  return <BoardTemplate />;
+  return <BacklogTemplate />;
 }

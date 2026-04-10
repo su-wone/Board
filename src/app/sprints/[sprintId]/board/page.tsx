@@ -1,4 +1,4 @@
-import WorkflowBoardTemplate from "@/features/dashboard/components/templates/WorkflowBoardTemplate";
+import WorkflowBoardTemplate from "@/components/templates/WorkflowBoardTemplate";
 
 interface Props {
   params: Promise<{ sprintId: string }>;
