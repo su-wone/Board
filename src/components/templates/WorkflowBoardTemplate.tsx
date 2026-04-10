@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
 import { mockSprints } from "@/mocks/sprints.mock";
 import { mockWorkflows } from "@/mocks/workflows.mock";
 import { useDashboardStore } from "@/store";
@@ -28,9 +29,9 @@ export default function WorkflowBoardTemplate({ sprintId }: Props) {
   return (
     <main className="p-6">
       <div className="mb-6 flex flex-col gap-1">
-        <Link href="/dashboard" className="text-xs text-gray-500 hover:underline">
-          ← Sprints
-        </Link>
+        <Button variant="link" size="xs" asChild>
+          <Link href="/dashboard">← Sprints</Link>
+        </Button>
         <h1 className="text-2xl font-bold">{sprint.title}</h1>
         <div className="flex items-center gap-2">
           <SprintDateRange startDate={sprint.startDate} endDate={sprint.endDate} />
