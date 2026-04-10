@@ -1,11 +1,11 @@
 "use client";
 
-import { Card } from "@/features/dashboard/types/card";
-import { Sprint } from "@/features/dashboard/types/sprint";
-import { mockSprints } from "@/features/dashboard/mocks/sprints.mock";
-import { useDashboardStore } from "@/features/dashboard/store";
-import SprintSection from "@/features/dashboard/components/organisms/SprintSection";
-import BacklogSection from "@/features/dashboard/components/organisms/BacklogSection";
+import { Card } from "@/types/card";
+import { Sprint } from "@/types/sprint";
+import { mockSprints } from "@/mocks/sprints.mock";
+import { useDashboardStore } from "@/store";
+import SprintSection from "@/components/organisms/SprintSection";
+import BacklogSection from "@/components/organisms/BacklogSection";
 
 function buildSprintSections(sprints: Sprint[], cards: Card[]) {
   return sprints.map((sprint) => ({

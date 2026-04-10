@@ -1,4 +1,4 @@
-import { SprintStatus } from "@/features/dashboard/types/sprint";
+import { SprintStatus } from "@/types/sprint";
 
 interface Props {
   status: SprintStatus;

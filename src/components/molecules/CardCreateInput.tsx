@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useDashboardStore } from "@/features/dashboard/store";
+import { useDashboardStore } from "@/store";
 
 interface Props {
   sprintId: number | null;

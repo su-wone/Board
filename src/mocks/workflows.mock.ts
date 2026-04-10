@@ -1,4 +1,4 @@
-import { Workflow } from "@/features/dashboard/types/workflow";
+import { Workflow } from "@/types/workflow";
 
 export const mockWorkflows: Workflow[] = [
   { id: 1, title: "To Do", order: 1 },

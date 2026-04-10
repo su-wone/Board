@@ -1,7 +1,7 @@
 import { create } from "zustand";
-import { Card } from "@/features/dashboard/types/card";
-import { mockCards } from "@/features/dashboard/mocks/cards.mock";
-import { mockSprints } from "@/features/dashboard/mocks/sprints.mock";
+import { Card } from "@/types/card";
+import { mockCards } from "@/mocks/cards.mock";
+import { mockSprints } from "@/mocks/sprints.mock";
 
 const DEFAULT_WORKFLOW_ID = 1; // "To Do"
 const BACKLOG_SECTION_ID = "backlog";

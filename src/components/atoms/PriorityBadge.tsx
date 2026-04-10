@@ -1,4 +1,4 @@
-import { CardPriority } from "@/features/dashboard/types/card";
+import { CardPriority } from "@/types/card";
 
 interface Props {
   priority: CardPriority;

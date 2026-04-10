@@ -1,19 +1,17 @@
 "use client";
 
-import { Card } from "@/features/dashboard/types/card";
-import { Sprint } from "@/features/dashboard/types/sprint";
-import { useDashboardStore, sprintSectionId } from "@/features/dashboard/store";
-import SprintSectionHeader from "@/features/dashboard/components/molecules/SprintSectionHeader";
-import CardItem from "@/features/dashboard/components/molecules/CardItem";
-import CardCreateInput from "@/features/dashboard/components/molecules/CardCreateInput";
+import { Card } from "@/types/card";
+import { useDashboardStore, backlogSectionId } from "@/store";
+import BacklogSectionHeader from "@/components/molecules/BacklogSectionHeader";
+import CardItem from "@/components/molecules/CardItem";
+import CardCreateInput from "@/components/molecules/CardCreateInput";
 
 interface Props {
-  sprint: Sprint;
   cards: Card[];
 }
 
-export default function SprintSection({ sprint, cards }: Props) {
-  const sectionId = sprintSectionId(sprint.id);
+export default function BacklogSection({ cards }: Props) {
+  const sectionId = backlogSectionId();
   const contentId = `${sectionId}-content`;
   const isCollapsed = useDashboardStore((s) => s.collapsedSectionIds.has(sectionId));
   const toggleSection = useDashboardStore((s) => s.toggleSection);
@@ -22,8 +20,7 @@ export default function SprintSection({ sprint, cards }: Props) {
 
   return (
     <section className="flex flex-col gap-3">
-      <SprintSectionHeader
-        sprint={sprint}
+      <BacklogSectionHeader
         cardCount={cards.length}
         isCollapsed={isCollapsed}
         onToggle={() => toggleSection(sectionId)}
@@ -32,11 +29,11 @@ export default function SprintSection({ sprint, cards }: Props) {
       {!isCollapsed && (
         <div id={contentId} className="flex flex-col gap-2">
           {sorted.length === 0 ? (
-            <p className="text-sm text-gray-400">카드가 없습니다.</p>
+            <p className="text-sm text-gray-400">백로그가 비어 있습니다.</p>
           ) : (
             sorted.map((card) => <CardItem key={card.id} card={card} />)
           )}
-          <CardCreateInput sprintId={sprint.id} />
+          <CardCreateInput sprintId={null} />
         </div>
       )}
     </section>

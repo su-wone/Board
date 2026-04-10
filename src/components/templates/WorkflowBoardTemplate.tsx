@@ -1,12 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { mockSprints } from "@/features/dashboard/mocks/sprints.mock";
-import { mockWorkflows } from "@/features/dashboard/mocks/workflows.mock";
-import { useDashboardStore } from "@/features/dashboard/store";
-import SprintDateRange from "@/features/dashboard/components/atoms/SprintDateRange";
-import StatusBadge from "@/features/dashboard/components/atoms/StatusBadge";
-import WorkflowBoard from "@/features/dashboard/components/organisms/WorkflowBoard";
+import { mockSprints } from "@/mocks/sprints.mock";
+import { mockWorkflows } from "@/mocks/workflows.mock";
+import { useDashboardStore } from "@/store";
+import SprintDateRange from "@/components/atoms/SprintDateRange";
+import StatusBadge from "@/components/atoms/StatusBadge";
+import WorkflowBoard from "@/components/organisms/WorkflowBoard";
 
 interface Props {
   sprintId: number;

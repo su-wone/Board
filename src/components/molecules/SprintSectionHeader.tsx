@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
-import { Sprint } from "@/features/dashboard/types/sprint";
-import SprintDateRange from "@/features/dashboard/components/atoms/SprintDateRange";
-import StatusBadge from "@/features/dashboard/components/atoms/StatusBadge";
+import { Sprint } from "@/types/sprint";
+import SprintDateRange from "@/components/atoms/SprintDateRange";
+import StatusBadge from "@/components/atoms/StatusBadge";
 
 interface Props {
   sprint: Sprint;
@@ -40,7 +40,7 @@ export default function SprintSectionHeader({
       <div className="flex items-center gap-3">
         <span className="text-xs text-gray-500">{cardCount} cards</span>
         <Link
-          href={`/dashboard/sprints/${sprint.id}/board`}
+          href={`/sprints/${sprint.id}/board`}
           className="rounded border border-gray-300 bg-white px-2 py-1 text-xs font-medium text-gray-700 hover:bg-gray-50"
         >
           보드 열기
