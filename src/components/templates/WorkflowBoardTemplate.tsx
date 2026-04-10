@@ -29,8 +29,8 @@ export default function WorkflowBoardTemplate({ sprintId }: Props) {
   return (
     <main className="p-6">
       <div className="mb-6 flex flex-col gap-1">
-        <Button variant="link" size="xs" asChild>
-          <Link href="/dashboard">← Sprints</Link>
+        <Button variant="link" size="xs" className="justify-start p-0" asChild>
+          <Link href="/">← Sprints</Link>
         </Button>
         <h1 className="text-2xl font-bold">{sprint.title}</h1>
         <div className="flex items-center gap-2">
