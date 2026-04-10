@@ -1,3 +1,4 @@
+import { Badge } from "@/components/ui/badge";
 import { CardPriority } from "@/types/card";
 
 interface Props {
@@ -18,10 +19,8 @@ const labels: Record<CardPriority, string> = {
 
 export default function PriorityBadge({ priority }: Props) {
   return (
-    <span
-      className={`inline-block rounded px-2 py-0.5 text-xs font-medium ${styles[priority]}`}
-    >
+    <Badge variant="outline" className={styles[priority]}>
       {labels[priority]}
-    </span>
+    </Badge>
   );
 }

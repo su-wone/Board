@@ -10,5 +10,5 @@ export interface Card {
   sprintId: number | null;
   priority: CardPriority;
   order: number;
-  storyPoint?: number | null;
+  storyPoint: number | null;
 }

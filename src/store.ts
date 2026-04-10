@@ -47,6 +47,7 @@ export const useDashboardStore = create<DashboardStore>((set) => ({
         sprintId,
         priority: "medium",
         order: nextOrder,
+        storyPoint: null,
       };
 
       return { cards: [...state.cards, newCard] };

@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { useDashboardStore } from "@/store";
 
 interface Props {
@@ -33,18 +35,18 @@ export default function CardCreateInput({ sprintId }: Props) {
 
   if (!isOpen) {
     return (
-      <button
-        type="button"
+      <Button
+        variant="outline"
         onClick={() => setIsOpen(true)}
-        className="rounded-md border border-dashed border-gray-300 px-3 py-2 text-left text-sm text-gray-500 hover:border-gray-400 hover:bg-gray-50"
+        className="w-full justify-start border-dashed text-muted-foreground"
       >
         + 카드 추가
-      </button>
+      </Button>
     );
   }
 
   return (
-    <input
+    <Input
       ref={inputRef}
       type="text"
       value={title}
@@ -62,7 +64,6 @@ export default function CardCreateInput({ sprintId }: Props) {
         }
       }}
       onBlur={handleClose}
-      className="rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
     />
   );
 }

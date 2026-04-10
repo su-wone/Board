@@ -1,3 +1,4 @@
+import { Badge } from "@/components/ui/badge";
 import { SprintStatus } from "@/types/sprint";
 
 interface Props {
@@ -18,10 +19,8 @@ const labels: Record<SprintStatus, string> = {
 
 export default function StatusBadge({ status }: Props) {
   return (
-    <span
-      className={`inline-block rounded px-2 py-0.5 text-xs font-medium ${styles[status]}`}
-    >
+    <Badge variant="outline" className={styles[status]}>
       {labels[status]}
-    </span>
+    </Badge>
   );
 }
