@@ -1,14 +1,19 @@
-export type CardPriority = "low" | "medium" | "high";
-export type CardType = "task" | "story" | "bug";
+export type CardPriority = "LOW" | "MEDIUM" | "HIGH";
+export type CardType = "EPIC" | "STORY" | "TASK" | "SUB_TASK" | "BUG";
 
 export interface Card {
   id: number;
-  key: string; // e.g. "BOARD-12"
-  title: string;
-  type: CardType;
   workflowId: number;
   sprintId: number | null;
-  priority: CardPriority;
+  assigneeId: number | null;
+  reporterId: number | null;
+  parentId: number | null;
+  key: string;
+  type: CardType;
+  title: string;
+  description: string | null;
   order: number;
+  dueDate: string | null;
+  priority: CardPriority;
   storyPoint: number | null;
 }

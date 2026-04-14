@@ -6,15 +6,15 @@ interface Props {
 }
 
 const styles: Record<SprintStatus, string> = {
-  planned: "bg-gray-200 text-gray-700",
-  active: "bg-blue-100 text-blue-700",
-  completed: "bg-green-100 text-green-700",
+  PLANNED: "bg-gray-200 text-gray-700",
+  IN_PROGRESS: "bg-blue-100 text-blue-700",
+  DONE: "bg-green-100 text-green-700",
 };
 
 const labels: Record<SprintStatus, string> = {
-  planned: "Planned",
-  active: "Active",
-  completed: "Completed",
+  PLANNED: "Planned",
+  IN_PROGRESS: "In Progress",
+  DONE: "Done",
 };
 
 export default function StatusBadge({ status }: Props) {
