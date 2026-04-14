@@ -1,4 +1,4 @@
-import { Card } from "@/types/card";
+import { Card, CardPriority, CardType } from "@/types/card";
 import { Sprint } from "@/types/sprint";
 import { Workflow } from "@/types/workflow";
 
@@ -27,3 +27,24 @@ export function getCards(query: CardsQuery = {}) {
 export const getSprints = () => request<Sprint[]>("/sprints");
 export const getSprintById = (id: number) => request<Sprint>(`/sprints/${id}`);
 export const getWorkflows = () => request<Workflow[]>("/workflows");
+
+export interface CreateCardInput {
+  title: string;
+  workflowId: number;
+  sprintId: number | null;
+  type?: CardType;
+  priority?: CardPriority;
+}
+
+export async function createCard(input: CreateCardInput): Promise<Card> {
+  const res = await fetch(`${API_BASE_URL}/cards`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(input),
+    cache: "no-store",
+  });
+  if (!res.ok) {
+    throw new Error(`POST /cards failed: ${res.status} ${res.statusText}`);
+  }
+  return res.json() as Promise<Card>;
+}
