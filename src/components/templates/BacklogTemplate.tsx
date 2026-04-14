@@ -1,28 +1,19 @@
-"use client";
-
 import { Card } from "@/types/card";
 import { Sprint } from "@/types/sprint";
-import { mockSprints } from "@/mocks/sprints.mock";
-import { useDashboardStore } from "@/store";
 import SprintSection from "@/components/organisms/SprintSection";
 import BacklogSection from "@/components/organisms/BacklogSection";
 
-function buildSprintSections(sprints: Sprint[], cards: Card[]) {
-  return sprints.map((sprint) => ({
+interface Props {
+  sprints: Sprint[];
+  cards: Card[];
+}
+
+export default function BacklogTemplate({ sprints, cards }: Props) {
+  const sprintSections = sprints.map((sprint) => ({
     sprint,
     cards: cards.filter((c) => c.sprintId === sprint.id),
   }));
-}
-
-function selectBacklogCards(cards: Card[]) {
-  return cards.filter((c) => c.sprintId === null);
-}
-
-export default function BacklogTemplate() {
-  const cards = useDashboardStore((s) => s.cards);
-
-  const sprintSections = buildSprintSections(mockSprints, cards);
-  const backlogCards = selectBacklogCards(cards);
+  const backlogCards = cards.filter((c) => c.sprintId === null);
 
   return (
     <main className="p-6">
