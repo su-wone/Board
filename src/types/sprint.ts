@@ -6,5 +6,6 @@ export interface Sprint {
   status: SprintStatus;
   startDate: string | null;
   endDate: string | null;
+  goal: string | null;
   cardCount: number;
 }

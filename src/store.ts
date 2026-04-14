@@ -1,5 +1,4 @@
 import { create } from "zustand";
-import { mockSprints } from "@/mocks/sprints.mock";
 
 const BACKLOG_SECTION_ID = "backlog";
 
@@ -11,10 +10,7 @@ interface DashboardStore {
   toggleSection: (id: string) => void;
 }
 
-const initialCollapsed = new Set<string>([
-  ...mockSprints.map((s) => sprintSectionId(s.id)),
-  backlogSectionId(),
-]);
+const initialCollapsed = new Set<string>([backlogSectionId()]);
 
 export const useDashboardStore = create<DashboardStore>((set) => ({
   collapsedSectionIds: initialCollapsed,
