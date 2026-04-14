@@ -26,6 +26,7 @@ import {
 } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import IssueCreateModal from "@/components/organisms/IssueCreateModal";
 
 interface Props {
   children: React.ReactNode;
@@ -107,9 +108,11 @@ export default function AppShell({ children }: Props) {
           <div className="w-72">
             <Input placeholder="Search…" className="h-9" />
           </div>
-          <Button size="icon" aria-label="Create issue">
-            <Plus />
-          </Button>
+          <IssueCreateModal defaultSprintId={null}>
+            <Button size="icon" aria-label="Create issue">
+              <Plus />
+            </Button>
+          </IssueCreateModal>
           <div className="size-9 shrink-0 rounded-full bg-muted" />
         </header>
         <div className="flex-1 overflow-auto">{children}</div>

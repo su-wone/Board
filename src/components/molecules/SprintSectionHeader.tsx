@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Sprint } from "@/types/sprint";
 import SprintDateRange from "@/components/atoms/SprintDateRange";
 import StatusBadge from "@/components/atoms/StatusBadge";
+import IssueCreateModal from "@/components/organisms/IssueCreateModal";
 
 interface Props {
   sprint: Sprint;
@@ -36,6 +37,9 @@ export default function SprintSectionHeader({
       </div>
       <div className="flex items-center gap-3">
         <span className="text-xs text-gray-500">{cardCount} cards</span>
+        <IssueCreateModal defaultSprintId={sprint.id}>
+          <Button variant="outline" size="xs">+ Create</Button>
+        </IssueCreateModal>
         {sprint.status === "PLANNED" && (
           <Button size="xs" disabled>Start Sprint</Button>
         )}
