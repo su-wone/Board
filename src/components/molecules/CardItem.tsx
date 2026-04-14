@@ -1,5 +1,10 @@
 import { Card as CardType } from "@/types/card";
-import { Card, CardHeader } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import CardKey from "@/components/atoms/CardKey";
 import CardTypeChip from "@/components/atoms/CardTypeChip";
 import PriorityBadge from "@/components/atoms/PriorityBadge";
@@ -14,8 +19,10 @@ export default function CardItem({ card }: Props) {
     <Card size="sm">
       <CardHeader>
         <CardKey cardKey={card.key} />
-        <p className="text-sm font-medium">{card.title}</p>
-        <div className="mt-2 flex items-center gap-2">
+        <CardTitle className="text-sm">{card.title}</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <div className="flex items-center gap-2">
           <CardTypeChip type={card.type} />
           <PriorityBadge priority={card.priority} />
           {card.storyPoint !== null && (
@@ -24,7 +31,7 @@ export default function CardItem({ card }: Props) {
           <div className="flex-1" />
           <AssigneeAvatar assigneeId={card.assigneeId} />
         </div>
-      </CardHeader>
+      </CardContent>
     </Card>
   );
 }

@@ -14,7 +14,6 @@ interface Props {
 
 export default function SprintSection({ sprint, cards }: Props) {
   const sectionId = sprintSectionId(sprint.id);
-  const contentId = `${sectionId}-content`;
   const isCollapsed = useDashboardStore((s) => s.collapsedSectionIds.has(sectionId));
   const toggleSection = useDashboardStore((s) => s.toggleSection);
 
@@ -27,10 +26,9 @@ export default function SprintSection({ sprint, cards }: Props) {
         cardCount={cards.length}
         isCollapsed={isCollapsed}
         onToggle={() => toggleSection(sectionId)}
-        contentId={contentId}
       />
       {!isCollapsed && (
-        <div id={contentId} className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2">
           {sorted.length === 0 ? (
             <p className="text-sm text-gray-400">카드가 없습니다.</p>
           ) : (

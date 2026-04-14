@@ -12,7 +12,6 @@ interface Props {
 
 export default function BacklogSection({ cards }: Props) {
   const sectionId = backlogSectionId();
-  const contentId = `${sectionId}-content`;
   const isCollapsed = useDashboardStore((s) => s.collapsedSectionIds.has(sectionId));
   const toggleSection = useDashboardStore((s) => s.toggleSection);
 
@@ -24,10 +23,9 @@ export default function BacklogSection({ cards }: Props) {
         cardCount={cards.length}
         isCollapsed={isCollapsed}
         onToggle={() => toggleSection(sectionId)}
-        contentId={contentId}
       />
       {!isCollapsed && (
-        <div id={contentId} className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2">
           {sorted.length === 0 ? (
             <p className="text-sm text-gray-400">백로그가 비어 있습니다.</p>
           ) : (
