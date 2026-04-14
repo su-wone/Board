@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/types/card";
 import { Sprint } from "@/types/sprint";
@@ -15,18 +14,19 @@ interface Props {
 
 export default function WorkflowBoardTemplate({ sprint, workflows, cards }: Props) {
   return (
-    <main className="p-6">
-      <div className="mb-6 flex flex-col gap-1">
-        <Button variant="link" size="xs" className="justify-start p-0" asChild>
-          <Link href="/">← Sprints</Link>
-        </Button>
-        <h1 className="text-2xl font-bold">{sprint.title}</h1>
-        <div className="flex items-center gap-2">
-          <SprintDateRange startDate={sprint.startDate} endDate={sprint.endDate} />
-          <StatusBadge status={sprint.status} />
+    <div className="p-6">
+      <div className="mb-6 flex items-start gap-4">
+        <div className="flex flex-1 flex-col gap-1">
+          <h1 className="text-2xl font-bold">{sprint.title}</h1>
+          <div className="flex items-center gap-2">
+            <SprintDateRange startDate={sprint.startDate} endDate={sprint.endDate} />
+            <StatusBadge status={sprint.status} />
+            <span className="text-sm text-gray-500">· {sprint.cardCount} issues</span>
+          </div>
         </div>
+        <Button disabled>Complete Sprint</Button>
       </div>
       <WorkflowBoard workflows={workflows} cards={cards} />
-    </main>
+    </div>
   );
 }

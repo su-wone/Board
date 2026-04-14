@@ -16,14 +16,13 @@ export default function BacklogTemplate({ sprints, cards }: Props) {
   const backlogCards = cards.filter((c) => c.sprintId === null);
 
   return (
-    <main className="p-6">
-      <h1 className="mb-6 text-2xl font-bold">백로그</h1>
+    <div className="p-6">
       <div className="flex flex-col gap-8">
         {sprintSections.map(({ sprint, cards }) => (
           <SprintSection key={sprint.id} sprint={sprint} cards={cards} />
         ))}
         <BacklogSection cards={backlogCards} />
       </div>
-    </main>
+    </div>
   );
 }

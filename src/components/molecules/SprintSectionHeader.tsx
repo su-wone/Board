@@ -10,7 +10,6 @@ interface Props {
   cardCount: number;
   isCollapsed: boolean;
   onToggle: () => void;
-  contentId: string;
 }
 
 export default function SprintSectionHeader({
@@ -18,7 +17,6 @@ export default function SprintSectionHeader({
   cardCount,
   isCollapsed,
   onToggle,
-  contentId,
 }: Props) {
   return (
     <div className="flex items-center justify-between border-b border-gray-200 pb-2">
@@ -27,8 +25,6 @@ export default function SprintSectionHeader({
           variant="ghost"
           size="icon-xs"
           onClick={onToggle}
-          aria-expanded={!isCollapsed}
-          aria-controls={contentId}
         >
           <ChevronRight
             className={`transition-transform ${isCollapsed ? "" : "rotate-90"}`}
@@ -40,6 +36,9 @@ export default function SprintSectionHeader({
       </div>
       <div className="flex items-center gap-3">
         <span className="text-xs text-gray-500">{cardCount} cards</span>
+        {sprint.status === "PLANNED" && (
+          <Button size="xs" disabled>Start Sprint</Button>
+        )}
         <Button variant="outline" size="xs" asChild>
           <Link href={`/sprints/${sprint.id}/board`}>
             보드 열기
