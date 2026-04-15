@@ -1,9 +1,7 @@
 import { create } from "zustand";
 
-const BACKLOG_SECTION_ID = "backlog";
-
 export const sprintSectionId = (sprintId: number) => `sprint-${sprintId}`;
-export const backlogSectionId = () => BACKLOG_SECTION_ID;
+export const backlogSectionId = () => "backlog";
 
 interface DashboardStore {
   collapsedSectionIds: Set<string>;
