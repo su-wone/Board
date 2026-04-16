@@ -5,7 +5,6 @@ import { Workflow } from "@/types/workflow";
 import SprintDateRange from "@/components/atoms/SprintDateRange";
 import StatusBadge from "@/components/atoms/StatusBadge";
 import WorkflowBoard from "@/components/organisms/WorkflowBoard";
-import IssueCreateModal from "@/components/organisms/IssueCreateModal";
 
 interface Props {
   sprint: Sprint;
@@ -26,9 +25,6 @@ export default function WorkflowBoardTemplate({ sprint, workflows, cards }: Prop
           </div>
         </div>
         <div className="flex items-center gap-2">
-          <IssueCreateModal defaultSprintId={sprint.id}>
-            <Button variant="outline">+ Create</Button>
-          </IssueCreateModal>
           <Button disabled>Complete Sprint</Button>
         </div>
       </div>

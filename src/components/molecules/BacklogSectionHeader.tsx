@@ -1,6 +1,5 @@
 import { ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import IssueCreateModal from "@/components/organisms/IssueCreateModal";
 
 interface Props {
   cardCount: number;
@@ -29,9 +28,6 @@ export default function BacklogSectionHeader({
       </div>
       <div className="flex items-center gap-3">
         <span className="text-xs text-gray-500">{cardCount} cards</span>
-        <IssueCreateModal defaultSprintId={null}>
-          <Button variant="outline" size="xs">+ Create</Button>
-        </IssueCreateModal>
       </div>
     </div>
   );
