@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import { Card } from "@/types/card";
 import { Sprint } from "@/types/sprint";
 import { Workflow } from "@/types/workflow";
@@ -23,9 +22,6 @@ export default function WorkflowBoardTemplate({ sprint, workflows, cards }: Prop
             <StatusBadge status={sprint.status} />
             <span className="text-sm text-gray-500">· {sprint.cardCount} issues</span>
           </div>
-        </div>
-        <div className="flex items-center gap-2">
-          <Button disabled>Complete Sprint</Button>
         </div>
       </div>
       <WorkflowBoard workflows={workflows} cards={cards} />

@@ -36,9 +36,6 @@ export default function SprintSectionHeader({
       </div>
       <div className="flex items-center gap-3">
         <span className="text-xs text-gray-500">{cardCount} cards</span>
-        {sprint.status === "PLANNED" && (
-          <Button size="xs" disabled>Start Sprint</Button>
-        )}
         <Button variant="outline" size="xs" asChild>
           <Link href={`/sprints/${sprint.id}/board`}>
             보드 열기

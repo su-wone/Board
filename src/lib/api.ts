@@ -1,4 +1,4 @@
-import { Card, CardPriority, CardType } from "@/types/card";
+import { Card } from "@/types/card";
 import { Sprint } from "@/types/sprint";
 import { Workflow } from "@/types/workflow";
 
@@ -32,8 +32,6 @@ export interface CreateCardInput {
   title: string;
   workflowId: number;
   sprintId: number | null;
-  type?: CardType;
-  priority?: CardPriority;
 }
 
 export async function createCard(input: CreateCardInput): Promise<Card> {

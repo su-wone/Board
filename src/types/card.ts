@@ -3,6 +3,9 @@ export type CardType = "EPIC" | "STORY" | "TASK" | "SUB_TASK" | "BUG";
 
 export interface Card {
   id: number;
+  createdAt: string;
+  updatedAt: string;
+  deletedAt: string | null;
   workflowId: number;
   sprintId: number | null;
   assigneeId: number | null;
