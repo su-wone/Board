@@ -1,0 +1,37 @@
+"use client";
+
+import { Card } from "@/types/card";
+import { useDashboardStore, backlogSectionId } from "@/store";
+import BacklogSectionHeader from "@/components/molecules/BacklogSectionHeader";
+import CardItem from "@/components/molecules/CardItem";
+import CardCreateInput from "@/components/molecules/CardCreateInput";
+
+interface Props {
+  cards: Card[];
+}
+
+export default function BacklogSection({ cards }: Props) {
+  const sectionId = backlogSectionId();
+  const isCollapsed = useDashboardStore((s) => s.collapsedSectionIds.has(sectionId));
+  const toggleSection = useDashboardStore((s) => s.toggleSection);
+
+  return (
+    <section className="flex flex-col gap-3">
+      <BacklogSectionHeader
+        cardCount={cards.length}
+        isCollapsed={isCollapsed}
+        onToggle={() => toggleSection(sectionId)}
+      />
+      {!isCollapsed && (
+        <div className="flex flex-col gap-2">
+          {cards.length === 0 ? (
+            <p className="text-sm text-gray-400">백로그가 비어 있습니다.</p>
+          ) : (
+            cards.map((card) => <CardItem key={card.id} card={card} />)
+          )}
+          <CardCreateInput sprintId={null} />
+        </div>
+      )}
+    </section>
+  );
+}
