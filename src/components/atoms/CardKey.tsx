@@ -1,7 +1,7 @@
 interface Props {
-  cardKey: string;
+  cardId: number;
 }
 
-export default function CardKey({ cardKey }: Props) {
-  return <p className="text-xs text-gray-500">{cardKey}</p>;
+export default function CardKey({ cardId }: Props) {
+  return <p className="text-xs text-gray-500">BOARD-{cardId}</p>;
 }

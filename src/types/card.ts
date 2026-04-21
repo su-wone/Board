@@ -8,15 +8,12 @@ export interface Card {
   deletedAt: string | null;
   workflowId: number;
   sprintId: number | null;
-  assigneeId: number | null;
   reporterId: number | null;
   parentId: number | null;
-  key: string;
   type: CardType;
   title: string;
   description: string | null;
   order: number;
   dueDate: string | null;
   priority: CardPriority;
-  storyPoint: number | null;
 }
