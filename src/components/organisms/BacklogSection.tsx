@@ -15,8 +15,6 @@ export default function BacklogSection({ cards }: Props) {
   const isCollapsed = useDashboardStore((s) => s.collapsedSectionIds.has(sectionId));
   const toggleSection = useDashboardStore((s) => s.toggleSection);
 
-  const sorted = [...cards].sort((a, b) => a.order - b.order);
-
   return (
     <section className="flex flex-col gap-3">
       <BacklogSectionHeader
@@ -26,10 +24,10 @@ export default function BacklogSection({ cards }: Props) {
       />
       {!isCollapsed && (
         <div className="flex flex-col gap-2">
-          {sorted.length === 0 ? (
+          {cards.length === 0 ? (
             <p className="text-sm text-gray-400">백로그가 비어 있습니다.</p>
           ) : (
-            sorted.map((card) => <CardItem key={card.id} card={card} />)
+            cards.map((card) => <CardItem key={card.id} card={card} />)
           )}
           <CardCreateInput sprintId={null} />
         </div>

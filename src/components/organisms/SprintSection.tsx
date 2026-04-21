@@ -17,22 +17,20 @@ export default function SprintSection({ sprint, cards }: Props) {
   const isCollapsed = useDashboardStore((s) => s.collapsedSectionIds.has(sectionId));
   const toggleSection = useDashboardStore((s) => s.toggleSection);
 
-  const sorted = [...cards].sort((a, b) => a.order - b.order);
-
   return (
     <section className="flex flex-col gap-3">
       <SprintSectionHeader
         sprint={sprint}
-        cardCount={cards.length}
+        cardCount={sprint.cardCount}
         isCollapsed={isCollapsed}
         onToggle={() => toggleSection(sectionId)}
       />
       {!isCollapsed && (
         <div className="flex flex-col gap-2">
-          {sorted.length === 0 ? (
+          {cards.length === 0 ? (
             <p className="text-sm text-gray-400">카드가 없습니다.</p>
           ) : (
-            sorted.map((card) => <CardItem key={card.id} card={card} />)
+            cards.map((card) => <CardItem key={card.id} card={card} />)
           )}
           <CardCreateInput sprintId={sprint.id} />
         </div>
