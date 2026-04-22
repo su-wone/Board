@@ -46,6 +46,40 @@
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
+
+  /* Newndy Board design tokens */
+  --color-newndy-blue: var(--newndy-blue);
+  --color-newndy-blue-active: var(--newndy-blue-active);
+  --color-newndy-blue-light: var(--newndy-blue-light);
+  --color-newndy-blue-legacy: var(--newndy-blue-legacy);
+  --color-lavender: var(--lavender);
+  --color-lavender-deep: var(--lavender-deep);
+  --color-lavender-soft: var(--lavender-soft);
+  --color-warm-50: var(--warm-50);
+  --color-warm-200: var(--warm-200);
+  --color-warm-400: var(--warm-400);
+  --color-warm-600: var(--warm-600);
+  --color-warm-900: var(--warm-900);
+  --color-semantic-teal: var(--semantic-teal);
+  --color-semantic-green: var(--semantic-green);
+  --color-semantic-orange: var(--semantic-orange);
+  --color-semantic-pink: var(--semantic-pink);
+  --color-epic-purple: var(--epic-purple);
+  --color-epic-brown: var(--epic-brown);
+  --color-badge-blue-bg: var(--badge-blue-bg);
+  --color-badge-blue-text: var(--badge-blue-text);
+
+  --shadow-card:
+    0 1px 1px rgba(0, 0, 0, 0.02),
+    0 2px 4px rgba(0, 0, 0, 0.03),
+    0 4px 8px rgba(0, 0, 0, 0.03),
+    0 8px 18px rgba(0, 0, 0, 0.04);
+  --shadow-deep:
+    0 1px 2px rgba(0, 0, 0, 0.02),
+    0 4px 8px rgba(0, 0, 0, 0.03),
+    0 12px 20px rgba(0, 0, 0, 0.04),
+    0 24px 36px rgba(0, 0, 0, 0.04),
+    0 40px 52px rgba(0, 0, 0, 0.05);
 }
 
 :root {
@@ -55,8 +89,8 @@
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.655 0.158 260);
+  --primary-foreground: oklch(1 0 0);
   --secondary: oklch(0.97 0 0);
   --secondary-foreground: oklch(0.205 0 0);
   --muted: oklch(0.97 0 0);
@@ -66,7 +100,7 @@
   --destructive: oklch(0.577 0.245 27.325);
   --border: oklch(0.922 0 0);
   --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
+  --ring: oklch(0.655 0.158 260);
   --chart-1: oklch(0.87 0 0);
   --chart-2: oklch(0.556 0 0);
   --chart-3: oklch(0.439 0 0);
@@ -81,6 +115,38 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+
+  /* Newndy Board — brand blues */
+  --newndy-blue: oklch(0.655 0.158 260);
+  --newndy-blue-active: oklch(0.565 0.176 260);
+  --newndy-blue-light: oklch(0.795 0.088 260);
+  --newndy-blue-legacy: oklch(0.562 0.188 245);
+
+  /* Newndy Board — lavender */
+  --lavender: oklch(0.755 0.095 290);
+  --lavender-deep: oklch(0.565 0.165 290);
+  --lavender-soft: oklch(0.938 0.028 290);
+
+  /* Newndy Board — warm neutrals */
+  --warm-50: oklch(0.967 0.002 70);
+  --warm-200: oklch(0.882 0 0);
+  --warm-400: oklch(0.686 0.007 70);
+  --warm-600: oklch(0.452 0.007 70);
+  --warm-900: oklch(0.265 0.005 70);
+
+  /* Newndy Board — semantic accents */
+  --semantic-teal: oklch(0.612 0.085 190);
+  --semantic-green: oklch(0.642 0.195 145);
+  --semantic-orange: oklch(0.625 0.195 42);
+  --semantic-pink: oklch(0.715 0.258 345);
+
+  /* Newndy Board — epic tones */
+  --epic-purple: oklch(0.262 0.095 295);
+  --epic-brown: oklch(0.295 0.055 60);
+
+  /* Newndy Board — tinted surfaces */
+  --badge-blue-bg: oklch(0.962 0.015 260);
+  --badge-blue-text: oklch(0.565 0.176 260);
 }
 
 .dark {
@@ -90,8 +156,8 @@
   --card-foreground: oklch(0.985 0 0);
   --popover: oklch(0.205 0 0);
   --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
+  --primary: oklch(0.72 0.15 260);
+  --primary-foreground: oklch(1 0 0);
   --secondary: oklch(0.269 0 0);
   --secondary-foreground: oklch(0.985 0 0);
   --muted: oklch(0.269 0 0);
@@ -101,7 +167,7 @@
   --destructive: oklch(0.704 0.191 22.216);
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
+  --ring: oklch(0.72 0.15 260);
   --chart-1: oklch(0.87 0 0);
   --chart-2: oklch(0.556 0 0);
   --chart-3: oklch(0.439 0 0);
@@ -115,6 +181,38 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
+
+  /* Newndy Board — brand blues (slightly brighter for dark) */
+  --newndy-blue: oklch(0.72 0.15 260);
+  --newndy-blue-active: oklch(0.645 0.168 260);
+  --newndy-blue-light: oklch(0.82 0.08 260);
+  --newndy-blue-legacy: oklch(0.63 0.178 245);
+
+  /* Newndy Board — lavender */
+  --lavender: oklch(0.78 0.09 290);
+  --lavender-deep: oklch(0.63 0.155 290);
+  --lavender-soft: oklch(0.32 0.06 290);
+
+  /* Newndy Board — warm neutrals (inverted for dark) */
+  --warm-50: oklch(0.22 0.005 70);
+  --warm-200: oklch(0.32 0.005 70);
+  --warm-400: oklch(0.52 0.007 70);
+  --warm-600: oklch(0.72 0.005 70);
+  --warm-900: oklch(0.95 0.002 70);
+
+  /* Newndy Board — semantic accents */
+  --semantic-teal: oklch(0.685 0.095 190);
+  --semantic-green: oklch(0.72 0.195 145);
+  --semantic-orange: oklch(0.705 0.195 42);
+  --semantic-pink: oklch(0.78 0.235 345);
+
+  /* Newndy Board — epic tones */
+  --epic-purple: oklch(0.55 0.15 295);
+  --epic-brown: oklch(0.5 0.08 60);
+
+  /* Newndy Board — tinted surfaces */
+  --badge-blue-bg: oklch(0.3 0.075 260);
+  --badge-blue-text: oklch(0.82 0.08 260);
 }
 
 @layer base {
