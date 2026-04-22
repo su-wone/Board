@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 
 interface TabBarProps {
+  activeSprintId?: number;
   className?: string;
 }
 
@@ -13,42 +14,47 @@ interface Tab {
   href: string | null;
 }
 
-const TABS: Tab[] = [
-  { label: '요약', href: null },
-  { label: '타임라인', href: null },
-  { label: '백로그', href: '/' },
-  { label: '활성 스프린트', href: '/sprints/sprint-7/board' },
-  { label: '캘린더', href: null },
-  { label: '보고서', href: null },
-  { label: '목록', href: null },
-  { label: '양식', href: null },
-  { label: '모든 업무', href: null },
-  { label: '정보선드', href: null },
-  { label: '개발', href: null },
-  { label: '코드', href: null },
-  { label: '보안', href: null },
-  { label: '릴리스', href: null },
-  { label: '메모', href: null },
-];
+function buildTabs(activeSprintId?: number): Tab[] {
+  const boardHref = '/';
+  const backlogHref =
+    activeSprintId !== undefined ? `/sprints/${activeSprintId}/backlog` : null;
+  return [
+    { label: '요약', href: null },
+    { label: '타임라인', href: null },
+    { label: '백로그', href: backlogHref },
+    { label: '활성 스프린트', href: boardHref },
+    { label: '캘린더', href: null },
+    { label: '보고서', href: null },
+    { label: '목록', href: null },
+    { label: '양식', href: null },
+    { label: '모든 업무', href: null },
+    { label: '정보선드', href: null },
+    { label: '개발', href: null },
+    { label: '코드', href: null },
+    { label: '보안', href: null },
+    { label: '릴리스', href: null },
+    { label: '메모', href: null },
+  ];
+}
 
 function isTabActive(tab: Tab, pathname: string): boolean {
-  if (tab.label === '백로그') return pathname === '/';
-  if (tab.label === '활성 스프린트') return pathname.startsWith('/sprints/');
+  if (tab.label === '백로그') return /^\/sprints\/\d+\/backlog$/.test(pathname);
+  if (tab.label === '활성 스프린트') {
+    return pathname === '/' || /^\/sprints\/\d+\/board$/.test(pathname);
+  }
   return false;
 }
 
-export function TabBar({ className }: TabBarProps) {
+export function TabBar({ activeSprintId, className }: TabBarProps) {
   const pathname = usePathname() ?? '';
+  const tabs = buildTabs(activeSprintId);
 
   return (
     <nav
-      className={cn(
-        'overflow-x-auto border-b border-border',
-        className,
-      )}
+      className={cn('overflow-x-auto border-b border-border', className)}
     >
       <div className="flex min-w-max items-center gap-0 px-4">
-        {TABS.map((tab) => {
+        {tabs.map((tab) => {
           const active = isTabActive(tab, pathname);
           const baseClass = cn(
             'relative whitespace-nowrap px-2.5 py-2.5 text-sm transition-colors',

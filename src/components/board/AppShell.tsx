@@ -22,9 +22,10 @@ export const BoardUIContext = createContext<BoardUIContextValue | null>(null);
 
 interface AppShellProps {
   children: ReactNode;
+  activeSprintId?: number;
 }
 
-export function AppShell({ children }: AppShellProps) {
+export function AppShell({ children, activeSprintId }: AppShellProps) {
   const pathname = usePathname() ?? '/';
   const [creating, setCreating] = useState(false);
   const [openTicket, setOpenTicketState] = useState<Ticket | null>(null);
@@ -47,7 +48,7 @@ export function AppShell({ children }: AppShellProps) {
       <div className="flex flex-1 flex-col overflow-hidden">
         <TopNav onCreate={openCreate} />
         <BoardHeader />
-        <TabBar />
+        <TabBar activeSprintId={activeSprintId} />
         <FilterRow onCreate={openCreate} />
         <div className="flex-1 overflow-auto">
           <BoardUIContext.Provider value={value}>
