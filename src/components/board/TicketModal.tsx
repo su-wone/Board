@@ -41,18 +41,14 @@ function Field({ label, children }: FieldProps) {
 
 export function TicketModal({ ticket, onOpenChange }: TicketModalProps) {
   const open = ticket !== null;
-  const [detail, setDetail] = useState<Ticket | null>(ticket);
+  const [fresh, setFresh] = useState<Ticket | null>(null);
 
   useEffect(() => {
-    if (!ticket) {
-      setDetail(null);
-      return;
-    }
+    if (!ticket) return;
     let active = true;
-    setDetail(ticket);
     getCard(ticket.id)
-      .then((fresh) => {
-        if (active) setDetail(fresh);
+      .then((loaded) => {
+        if (active) setFresh(loaded);
       })
       .catch(() => {
         // keep the summary ticket if detail fetch fails
@@ -61,6 +57,9 @@ export function TicketModal({ ticket, onOpenChange }: TicketModalProps) {
       active = false;
     };
   }, [ticket]);
+
+  const detail: Ticket | null =
+    ticket && fresh && fresh.id === ticket.id ? fresh : ticket;
 
   if (!detail) {
     return <Dialog open={open} onOpenChange={onOpenChange} />;
