@@ -11,11 +11,16 @@ const KNOWN_STATUSES: readonly TicketStatus[] = [
   'DONE',
 ];
 
-function mapStatus(title: string): TicketStatus {
-  if ((KNOWN_STATUSES as readonly string[]).includes(title)) {
+function mapStatus(title: string | undefined): TicketStatus {
+  if (title && (KNOWN_STATUSES as readonly string[]).includes(title)) {
     return title as TicketStatus;
   }
-  throw new Error(`Unknown workflow title from server: "${title}"`);
+  if (typeof window !== 'undefined') {
+    console.warn(
+      `toTicket: unknown or missing workflow title (got ${JSON.stringify(title)}), falling back to "TO DO"`,
+    );
+  }
+  return 'TO DO';
 }
 
 function mapType(type: ServerCardType): IssueType {
@@ -43,11 +48,11 @@ export function toTicket(c: ServerCard): Ticket {
     key: c.key,
     title: c.title,
     description: c.description ?? undefined,
-    status: mapStatus(c.workflow.title),
+    status: mapStatus(c.workflow?.title),
     type: mapType(c.type),
     priority: mapPriority(c.priority),
-    storyPoint: c.storyPoint,
-    dueDate: c.dueDate,
+    storyPoint: c.storyPoint ?? null,
+    dueDate: c.dueDate ?? null,
     assignee: c.assignee
       ? {
           id: c.assignee.id,
@@ -67,7 +72,11 @@ export function toTicket(c: ServerCard): Ticket {
     epic: c.epic
       ? { id: c.epic.id, name: c.epic.name, color: c.epic.color }
       : undefined,
-    labels: c.labels.map((l) => ({ id: l.id, name: l.name, color: l.color })),
+    labels: (c.labels ?? []).map((l) => ({
+      id: l.id,
+      name: l.name,
+      color: l.color,
+    })),
     workflowId: c.workflowId,
     sprintId: c.sprintId ?? undefined,
   };

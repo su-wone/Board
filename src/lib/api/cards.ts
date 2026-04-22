@@ -21,11 +21,13 @@ export async function getCard(id: number): Promise<Ticket> {
   return toTicket(card);
 }
 
-export async function createCard(input: UICreateInput): Promise<Ticket> {
+export async function createCard(input: UICreateInput): Promise<void> {
   const dto = fromCreateTicket(input);
-  const created = await api<ServerCard>('/cards', {
+  // POST 응답이 GET 과 shape 이 달라서 (관계 객체 없음) 어댑터를 태우지 않음.
+  // 호출 측에서 router.refresh() 로 서버 컴포넌트를 재페치해 정상 shape 의
+  // 카드를 받아오는 것이 안전함.
+  await api<unknown>('/cards', {
     method: 'POST',
     body: JSON.stringify(dto),
   });
-  return toTicket(created);
 }
