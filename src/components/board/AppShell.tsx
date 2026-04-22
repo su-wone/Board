@@ -1,7 +1,14 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
-import { createContext, useCallback, useMemo, useState } from 'react';
+import {
+  createContext,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import type { ReactNode } from 'react';
 import type { Ticket } from '@/types/board';
 import { BoardHeader } from './BoardHeader';
@@ -10,36 +17,75 @@ import { FilterRow } from './FilterRow';
 import { SideNav } from './SideNav';
 import { TabBar } from './TabBar';
 import { TicketModal } from './TicketModal';
+import { Toast, type ToastVariant } from './Toast';
 import { TopNav } from './TopNav';
 
 interface BoardUIContextValue {
   openCreate: () => void;
   openTicket: (ticket: Ticket) => void;
   closeTicket: () => void;
+  showToast: (message: string, variant?: ToastVariant) => void;
 }
 
 export const BoardUIContext = createContext<BoardUIContextValue | null>(null);
 
+interface ToastState {
+  id: number;
+  message: string;
+  variant: ToastVariant;
+}
+
+const TOAST_DURATION_MS = 2600;
+
 interface AppShellProps {
   children: ReactNode;
   activeSprintId?: number;
+  defaultWorkflowId?: number;
+  defaultSprintId?: number | null;
 }
 
-export function AppShell({ children, activeSprintId }: AppShellProps) {
+export function AppShell({
+  children,
+  activeSprintId,
+  defaultWorkflowId,
+  defaultSprintId,
+}: AppShellProps) {
   const pathname = usePathname() ?? '/';
   const [creating, setCreating] = useState(false);
   const [openTicket, setOpenTicketState] = useState<Ticket | null>(null);
+  const [toast, setToast] = useState<ToastState | null>(null);
+  const toastTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const openCreate = useCallback(() => setCreating(true), []);
-  const openTicket_ = useCallback(
+  const openTicketHandler = useCallback(
     (ticket: Ticket) => setOpenTicketState(ticket),
     [],
   );
   const closeTicket = useCallback(() => setOpenTicketState(null), []);
 
+  const showToast = useCallback(
+    (message: string, variant: ToastVariant = 'success') => {
+      if (toastTimerRef.current) clearTimeout(toastTimerRef.current);
+      setToast({ id: Date.now(), message, variant });
+    },
+    [],
+  );
+
+  useEffect(() => {
+    if (!toast) return;
+    const timer = setTimeout(() => setToast(null), TOAST_DURATION_MS);
+    toastTimerRef.current = timer;
+    return () => clearTimeout(timer);
+  }, [toast]);
+
   const value = useMemo<BoardUIContextValue>(
-    () => ({ openCreate, openTicket: openTicket_, closeTicket }),
-    [openCreate, openTicket_, closeTicket],
+    () => ({
+      openCreate,
+      openTicket: openTicketHandler,
+      closeTicket,
+      showToast,
+    }),
+    [openCreate, openTicketHandler, closeTicket, showToast],
   );
 
   return (
@@ -65,11 +111,11 @@ export function AppShell({ children, activeSprintId }: AppShellProps) {
       <CreateIssueModal
         open={creating}
         onOpenChange={setCreating}
-        onCreate={(issue) => {
-          // TODO: persist via API
-          console.log('create issue', issue);
-        }}
+        defaultWorkflowId={defaultWorkflowId}
+        defaultSprintId={defaultSprintId}
+        onToast={showToast}
       />
+      {toast && <Toast message={toast.message} variant={toast.variant} />}
     </div>
   );
 }

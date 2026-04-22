@@ -1,6 +1,7 @@
 'use client';
 
 import { ChevronDown } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import type { ReactNode } from 'react';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
@@ -10,23 +11,19 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
-import { EPICS } from '@/lib/mock/board-mock';
+import { createCard } from '@/lib/api/cards';
 import { cn } from '@/lib/utils';
-import type { IssueType, Priority, User } from '@/types/board';
-import { Avatar } from './Avatar';
-import { EpicPill } from './EpicPill';
+import type { IssueType, Priority } from '@/types/board';
 import { PriorityDot } from './PriorityDot';
 import { TypeIcon } from './TypeIcon';
+import type { ToastVariant } from './Toast';
 
 interface CreateIssueModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onCreate?: (issue: {
-    type: IssueType;
-    summary: string;
-    assignee?: User;
-    priority: Priority;
-  }) => void;
+  defaultWorkflowId?: number;
+  defaultSprintId?: number | null;
+  onToast?: (message: string, variant?: ToastVariant) => void;
 }
 
 interface FieldProps {
@@ -60,19 +57,43 @@ const PRIORITY_OPTIONS: { value: Priority; label: string }[] = [
 export function CreateIssueModal({
   open,
   onOpenChange,
-  onCreate,
+  defaultWorkflowId,
+  defaultSprintId,
+  onToast,
 }: CreateIssueModalProps) {
+  const router = useRouter();
   const [type, setType] = useState<IssueType>('task');
   const [summary, setSummary] = useState('');
-  const [assignee] = useState<User | undefined>(undefined);
   const [priority, setPriority] = useState<Priority>('medium');
+  const [submitting, setSubmitting] = useState(false);
 
-  const canSubmit = summary.trim().length > 0;
+  const canSubmit =
+    summary.trim().length > 0 && defaultWorkflowId !== undefined && !submitting;
 
-  const handleCreate = () => {
-    if (!canSubmit) return;
-    onCreate?.({ type, summary, assignee, priority });
-    onOpenChange(false);
+  const handleCreate = async () => {
+    if (!canSubmit || defaultWorkflowId === undefined) return;
+    setSubmitting(true);
+    try {
+      await createCard({
+        title: summary.trim(),
+        type,
+        priority,
+        workflowId: defaultWorkflowId,
+        sprintId: defaultSprintId ?? null,
+      });
+      onOpenChange(false);
+      setSummary('');
+      setType('task');
+      setPriority('medium');
+      onToast?.('업무를 생성했습니다');
+      router.refresh();
+    } catch (error) {
+      const message =
+        error instanceof Error ? error.message : '업무 생성에 실패했습니다';
+      onToast?.(message, 'error');
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -134,50 +155,25 @@ export function CreateIssueModal({
             />
           </Field>
 
-          <div className="grid grid-cols-2 gap-4">
-            <Field label="담당자">
-              <Button
-                variant="outline"
-                size="sm"
-                className="h-8 w-full justify-start gap-2"
-              >
-                <Avatar user={assignee} size={20} />
-                <span>{assignee?.name ?? '미지정'}</span>
-                <ChevronDown className="ml-auto size-3.5" />
-              </Button>
-            </Field>
-
-            <Field label="우선순위">
-              <div className="grid grid-cols-3 gap-1">
-                {PRIORITY_OPTIONS.map((option) => (
-                  <button
-                    type="button"
-                    key={option.value}
-                    onClick={() => setPriority(option.value)}
-                    className={cn(
-                      'flex items-center justify-center gap-1.5 rounded-md border px-2 py-1.5 text-xs transition-colors',
-                      priority === option.value
-                        ? 'border-newndy-blue bg-newndy-blue/10 text-newndy-blue-active'
-                        : 'border-border hover:bg-warm-50',
-                    )}
-                  >
-                    <PriorityDot priority={option.value} />
-                    {option.label}
-                  </button>
-                ))}
-              </div>
-            </Field>
-          </div>
-
-          <Field label="Epic">
-            <Button
-              variant="outline"
-              size="sm"
-              className="h-8 w-fit justify-start gap-2"
-            >
-              <EpicPill epic={EPICS.feedPurchase} />
-              <ChevronDown className="size-3" />
-            </Button>
+          <Field label="우선순위">
+            <div className="grid w-fit grid-cols-3 gap-1">
+              {PRIORITY_OPTIONS.map((option) => (
+                <button
+                  type="button"
+                  key={option.value}
+                  onClick={() => setPriority(option.value)}
+                  className={cn(
+                    'flex items-center justify-center gap-1.5 rounded-md border px-3 py-1.5 text-xs transition-colors',
+                    priority === option.value
+                      ? 'border-newndy-blue bg-newndy-blue/10 text-newndy-blue-active'
+                      : 'border-border hover:bg-warm-50',
+                  )}
+                >
+                  <PriorityDot priority={option.value} />
+                  {option.label}
+                </button>
+              ))}
+            </div>
           </Field>
         </div>
 
@@ -186,7 +182,7 @@ export function CreateIssueModal({
             취소
           </Button>
           <Button disabled={!canSubmit} onClick={handleCreate}>
-            만들기
+            {submitting ? '생성 중…' : '만들기'}
           </Button>
         </div>
       </DialogContent>

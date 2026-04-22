@@ -3,6 +3,7 @@ import { AppShell } from '@/components/board/AppShell';
 import { BoardView } from '@/components/board/BoardView';
 import { getCards } from '@/lib/api/cards';
 import { getSprint } from '@/lib/api/sprints';
+import { getWorkflows } from '@/lib/api/workflows';
 
 interface Props {
   params: Promise<{ sprintId: string }>;
@@ -13,14 +14,20 @@ export default async function SprintBoardPage({ params }: Props) {
   const id = Number(sprintId);
   if (!Number.isInteger(id)) notFound();
 
-  const [sprint, tickets] = await Promise.all([
+  const [sprint, tickets, workflows] = await Promise.all([
     getSprint(id).catch(() => null),
     getCards(id),
+    getWorkflows(),
   ]);
   if (!sprint) notFound();
+  const todoWorkflowId = workflows.find((w) => w.title === 'TO DO')?.id;
 
   return (
-    <AppShell activeSprintId={sprint.id}>
+    <AppShell
+      activeSprintId={sprint.id}
+      defaultWorkflowId={todoWorkflowId}
+      defaultSprintId={sprint.id}
+    >
       <BoardView tickets={tickets} />
     </AppShell>
   );
