@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogTitle,
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
@@ -68,6 +69,9 @@ export function TicketModal({ ticket, onOpenChange }: TicketModalProps) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-[980px] gap-0 overflow-hidden p-0 sm:max-w-[980px]">
+        <DialogDescription className="sr-only">
+          {detail.key} · {detail.status} 상세 보기
+        </DialogDescription>
         <div className="flex items-center gap-2 border-b border-border py-3 pl-4 pr-12">
           <TypeIcon type={detail.type} />
           <span className="text-sm font-medium text-warm-600">{detail.key}</span>

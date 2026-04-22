@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogTitle,
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
@@ -103,6 +104,9 @@ export function CreateIssueModal({
           <DialogTitle className="text-[22px] font-bold">
             업무 만들기
           </DialogTitle>
+          <DialogDescription className="sr-only">
+            프로젝트 VEASLY Board 에 새 업무를 추가합니다.
+          </DialogDescription>
         </div>
 
         <div className="flex flex-col gap-4 px-5 py-4">
