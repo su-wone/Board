@@ -1,5 +1,7 @@
-import WorkflowBoardTemplate from "@/components/templates/WorkflowBoardTemplate";
-import { getCards, getSprintById, getWorkflows } from "@/lib/api";
+import { notFound } from 'next/navigation';
+import { AppShell } from '@/components/board/AppShell';
+import { BoardView } from '@/components/board/BoardView';
+import { SPRINTS, TICKETS } from '@/lib/mock/board-mock';
 
 interface Props {
   params: Promise<{ sprintId: string }>;
@@ -7,13 +9,16 @@ interface Props {
 
 export default async function SprintBoardPage({ params }: Props) {
   const { sprintId } = await params;
-  const id = Number(sprintId);
+  const sprint = SPRINTS.find((s) => s.id === sprintId);
+  if (!sprint) notFound();
 
-  const [sprint, workflows, cards] = await Promise.all([
-    getSprintById(id),
-    getWorkflows(),
-    getCards({ sprintId: id }),
-  ]);
+  const sprintTickets = TICKETS.filter((t) =>
+    sprint.ticketIds.includes(t.id),
+  );
 
-  return <WorkflowBoardTemplate sprint={sprint} workflows={workflows} cards={cards} />;
+  return (
+    <AppShell>
+      <BoardView tickets={sprintTickets} />
+    </AppShell>
+  );
 }

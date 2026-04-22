@@ -1,7 +1,12 @@
-import BacklogTemplate from "@/components/templates/BacklogTemplate";
-import { getCards, getSprints } from "@/lib/api";
+import { AppShell } from '@/components/board/AppShell';
+import { BacklogView } from '@/components/board/BacklogView';
+import { BACKLOG_SECTIONS, TICKETS } from '@/lib/mock/board-mock';
 
-export default async function Home() {
-  const [sprints, cards] = await Promise.all([getSprints(), getCards()]);
-  return <BacklogTemplate sprints={sprints} cards={cards} />;
+// TODO: replace with server fetch (getSprints / getCards)
+export default function Page() {
+  return (
+    <AppShell>
+      <BacklogView sections={BACKLOG_SECTIONS} tickets={TICKETS} />
+    </AppShell>
+  );
 }
