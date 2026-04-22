@@ -50,19 +50,23 @@ export interface Ticket {
   storyPoint?: number | null;
 }
 
+export type SprintStatus = 'planned' | 'active' | 'done';
+
 export interface Sprint {
   id: number;
   name: string;
+  status: SprintStatus;
   dateRange: string;
   estimate: number;
   ticketIds: number[];
-  isActive?: boolean;
+  startDate: string | null;
+  endDate: string | null;
 }
 
 export interface BacklogSection {
   id: string;
   title: string;
-  variant: 'active-sprint' | 'bugs' | 'backlog';
+  variant: 'active-sprint' | 'planned-sprint' | 'backlog';
   ticketIds: number[];
   estimate?: number;
   dateRange?: string;

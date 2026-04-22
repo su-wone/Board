@@ -1,5 +1,5 @@
-import type { Sprint } from '@/types/board';
-import type { ServerSprint } from '@/types/server';
+import type { Sprint, SprintStatus } from '@/types/board';
+import type { ServerSprint, ServerSprintStatus } from '@/types/server';
 
 const KO_MONTHS = [
   '1월',
@@ -28,13 +28,27 @@ function formatRange(start: string | null, end: string | null): string {
   return '';
 }
 
+function mapStatus(status: ServerSprintStatus): SprintStatus {
+  switch (status) {
+    case 'IN_PROGRESS':
+      return 'active';
+    case 'DONE':
+      return 'done';
+    case 'PLANNED':
+    default:
+      return 'planned';
+  }
+}
+
 export function toSprint(s: ServerSprint): Sprint {
   return {
     id: s.id,
     name: s.title,
+    status: mapStatus(s.status),
     dateRange: formatRange(s.startDate, s.endDate),
     estimate: s.cardCount ?? 0,
     ticketIds: [],
-    isActive: s.status === 'IN_PROGRESS',
+    startDate: s.startDate,
+    endDate: s.endDate,
   };
 }
