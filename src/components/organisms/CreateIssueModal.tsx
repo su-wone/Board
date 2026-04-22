@@ -15,9 +15,9 @@ import { Input } from '@/components/ui/input';
 import { createCard } from '@/lib/api/cards';
 import { cn } from '@/lib/utils';
 import type { IssueType, Priority } from '@/types/board';
-import { PriorityDot } from './PriorityDot';
-import { TypeIcon } from './TypeIcon';
-import type { ToastVariant } from './Toast';
+import { PriorityDot } from '../atoms/PriorityDot';
+import { TypeIcon } from '../atoms/TypeIcon';
+import type { ToastVariant } from '../molecules/Toast';
 
 interface CreateIssueModalProps {
   open: boolean;

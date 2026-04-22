@@ -4,7 +4,7 @@ import { ChevronDown, MoreHorizontal, Plus, Search } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import type { User } from '@/types/board';
-import { Avatar } from './Avatar';
+import { Avatar } from '../atoms/Avatar';
 
 interface FilterRowProps {
   onCreate?: () => void;

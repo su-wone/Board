@@ -2,7 +2,7 @@
 
 import type { Ticket, TicketStatus } from '@/types/board';
 import { TicketCard } from './TicketCard';
-import { useBoardUI } from './use-board-ui';
+import { useBoardUI } from '@/hooks/use-board-ui';
 
 interface ColumnProps {
   status: TicketStatus;

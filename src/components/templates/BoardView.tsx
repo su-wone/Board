@@ -1,7 +1,7 @@
 'use client';
 
 import type { Ticket, TicketStatus } from '@/types/board';
-import { Column } from './Column';
+import { Column } from '../organisms/Column';
 
 interface BoardViewProps {
   tickets: Ticket[];

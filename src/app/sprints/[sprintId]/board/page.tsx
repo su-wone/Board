@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
-import { AppShell } from '@/components/board/AppShell';
-import { BoardView } from '@/components/board/BoardView';
+import { AppShell } from '@/components/templates/AppShell';
+import { BoardView } from '@/components/templates/BoardView';
 import { getCards } from '@/lib/api/cards';
 import { getSprint } from '@/lib/api/sprints';
 import { getWorkflows } from '@/lib/api/workflows';

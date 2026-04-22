@@ -1,7 +1,7 @@
 'use client';
 
 import { Plus } from 'lucide-react';
-import { useBoardUI } from './use-board-ui';
+import { useBoardUI } from '@/hooks/use-board-ui';
 
 export function CreateSprintButton() {
   const { showToast } = useBoardUI();

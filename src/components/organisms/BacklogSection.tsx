@@ -5,8 +5,8 @@ import { useState } from 'react';
 import type { ReactNode } from 'react';
 import { cn } from '@/lib/utils';
 import type { BacklogSection as BacklogSectionType, Ticket } from '@/types/board';
-import { BacklogRow } from './BacklogRow';
-import { useBoardUI } from './use-board-ui';
+import { BacklogRow } from '../molecules/BacklogRow';
+import { useBoardUI } from '@/hooks/use-board-ui';
 
 interface BacklogSectionProps {
   section: BacklogSectionType;

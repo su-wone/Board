@@ -13,11 +13,11 @@ import {
 import { Input } from '@/components/ui/input';
 import { getCard } from '@/lib/api/cards';
 import type { Ticket } from '@/types/board';
-import { Avatar } from './Avatar';
-import { EpicPill } from './EpicPill';
-import { PriorityDot } from './PriorityDot';
-import { StatusPill } from './StatusPill';
-import { TypeIcon } from './TypeIcon';
+import { Avatar } from '../atoms/Avatar';
+import { EpicPill } from '../atoms/EpicPill';
+import { PriorityDot } from '../atoms/PriorityDot';
+import { StatusPill } from '../atoms/StatusPill';
+import { TypeIcon } from '../atoms/TypeIcon';
 
 interface TicketModalProps {
   ticket: Ticket | null;

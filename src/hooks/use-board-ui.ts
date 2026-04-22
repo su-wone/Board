@@ -1,7 +1,7 @@
 'use client';
 
 import { useContext } from 'react';
-import { BoardUIContext } from './AppShell';
+import { BoardUIContext } from '@/components/templates/AppShell';
 
 export function useBoardUI() {
   const ctx = useContext(BoardUIContext);

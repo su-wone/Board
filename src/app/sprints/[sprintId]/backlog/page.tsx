@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
-import { AppShell } from '@/components/board/AppShell';
-import { BacklogSection } from '@/components/board/BacklogSection';
-import { CreateSprintButton } from '@/components/board/CreateSprintButton';
+import { AppShell } from '@/components/templates/AppShell';
+import { BacklogSection } from '@/components/organisms/BacklogSection';
+import { CreateSprintButton } from '@/components/molecules/CreateSprintButton';
 import { getCards } from '@/lib/api/cards';
 import { getEpics } from '@/lib/api/epics';
 import { getSprints } from '@/lib/api/sprints';

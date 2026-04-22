@@ -1,7 +1,7 @@
 'use client';
 
 import type { BacklogSection as BacklogSectionType, Ticket } from '@/types/board';
-import { BacklogSection } from './BacklogSection';
+import { BacklogSection } from '../organisms/BacklogSection';
 
 interface BacklogViewProps {
   sections: BacklogSectionType[];

@@ -11,14 +11,14 @@ import {
 } from 'react';
 import type { ReactNode } from 'react';
 import type { Ticket } from '@/types/board';
-import { BoardHeader } from './BoardHeader';
-import { CreateIssueModal } from './CreateIssueModal';
-import { FilterRow } from './FilterRow';
-import { SideNav } from './SideNav';
-import { TabBar } from './TabBar';
-import { TicketModal } from './TicketModal';
-import { Toast, type ToastVariant } from './Toast';
-import { TopNav } from './TopNav';
+import { BoardHeader } from '../organisms/BoardHeader';
+import { CreateIssueModal } from '../organisms/CreateIssueModal';
+import { FilterRow } from '../molecules/FilterRow';
+import { SideNav } from '../organisms/SideNav';
+import { TabBar } from '../molecules/TabBar';
+import { TicketModal } from '../organisms/TicketModal';
+import { Toast, type ToastVariant } from '../molecules/Toast';
+import { TopNav } from '../organisms/TopNav';
 
 interface BoardUIContextValue {
   openCreate: () => void;

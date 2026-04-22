@@ -2,12 +2,12 @@
 
 import { cn } from '@/lib/utils';
 import type { Ticket } from '@/types/board';
-import { Avatar } from './Avatar';
-import { DueWarningPill } from './DueWarningPill';
-import { EpicPill } from './EpicPill';
-import { EstimateChip } from './EstimateChip';
-import { PriorityDot } from './PriorityDot';
-import { TypeIcon } from './TypeIcon';
+import { Avatar } from '../atoms/Avatar';
+import { DueWarningPill } from '../atoms/DueWarningPill';
+import { EpicPill } from '../atoms/EpicPill';
+import { EstimateChip } from '../atoms/EstimateChip';
+import { PriorityDot } from '../atoms/PriorityDot';
+import { TypeIcon } from '../atoms/TypeIcon';
 
 interface TicketCardProps {
   ticket: Ticket;
