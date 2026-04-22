@@ -52,7 +52,7 @@ export function TicketModal({ ticket, onOpenChange }: TicketModalProps) {
       <DialogContent className="max-w-[980px] gap-0 overflow-hidden p-0 sm:max-w-[980px]">
         <div className="flex items-center gap-2 border-b border-border py-3 pl-4 pr-12">
           <TypeIcon type={ticket.type} />
-          <span className="text-sm font-medium text-warm-600">{ticket.id}</span>
+          <span className="text-sm font-medium text-warm-600">{ticket.key}</span>
           <div className="flex-1" />
           <Button variant="ghost" size="sm">
             공유
@@ -158,10 +158,10 @@ export function TicketModal({ ticket, onOpenChange }: TicketModalProps) {
               {ticket.labels?.length
                 ? ticket.labels.map((label) => (
                     <span
-                      key={label}
+                      key={label.id}
                       className="mr-1 rounded-sm bg-warm-200 px-2 py-0.5 text-xs"
                     >
-                      {label}
+                      {label.name}
                     </span>
                   ))
                 : '없음'}

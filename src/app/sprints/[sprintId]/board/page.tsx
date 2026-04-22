@@ -9,7 +9,7 @@ interface Props {
 
 export default async function SprintBoardPage({ params }: Props) {
   const { sprintId } = await params;
-  const sprint = SPRINTS.find((s) => s.id === sprintId);
+  const sprint = SPRINTS.find((s) => s.id === Number(sprintId));
   if (!sprint) notFound();
 
   const sprintTickets = TICKETS.filter((t) =>

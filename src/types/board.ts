@@ -9,21 +9,30 @@ export type TicketStatus =
   | 'READY FOR RELEASE'
   | 'DONE';
 
+export type EpicColor = 'lavender' | 'teal' | 'orange' | 'purple' | 'brown';
+
 export interface User {
-  id: string;
+  id: number;
   name: string;
   initial: string;
   avatarColor: string;
 }
 
 export interface Epic {
-  id: string;
+  id: number;
   name: string;
-  color: 'lavender' | 'teal' | 'orange' | 'purple' | 'brown';
+  color: EpicColor;
+}
+
+export interface Label {
+  id: number;
+  name: string;
+  color: string;
 }
 
 export interface Ticket {
-  id: string;
+  id: number;
+  key: string;
   title: string;
   type: IssueType;
   status: TicketStatus;
@@ -33,17 +42,20 @@ export interface Ticket {
   epic?: Epic;
   estimate?: number;
   dueWarning?: string;
-  labels?: string[];
-  sprintId?: string;
+  labels?: Label[];
+  workflowId?: number;
+  sprintId?: number;
   description?: string;
+  dueDate?: string | null;
+  storyPoint?: number | null;
 }
 
 export interface Sprint {
-  id: string;
+  id: number;
   name: string;
   dateRange: string;
   estimate: number;
-  ticketIds: string[];
+  ticketIds: number[];
   isActive?: boolean;
 }
 
@@ -51,7 +63,7 @@ export interface BacklogSection {
   id: string;
   title: string;
   variant: 'active-sprint' | 'bugs' | 'backlog';
-  ticketIds: string[];
+  ticketIds: number[];
   estimate?: number;
   dateRange?: string;
 }

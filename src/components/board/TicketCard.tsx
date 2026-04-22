@@ -21,8 +21,8 @@ export function TicketCard({ ticket, onClick, className }: TicketCardProps) {
   return (
     <button
       type="button"
-      data-ticket={ticket.id}
-      aria-label={`${ticket.id} ${ticket.title}`}
+      data-ticket={ticket.key}
+      aria-label={`${ticket.key} ${ticket.title}`}
       onClick={() => onClick?.(ticket)}
       className={cn(
         'flex w-full flex-col gap-2 rounded-lg border border-black/10 bg-white px-3 py-2.5 text-left',
@@ -52,7 +52,7 @@ export function TicketCard({ ticket, onClick, className }: TicketCardProps) {
 
       <div className="mt-0.5 flex items-center gap-2">
         <TypeIcon type={ticket.type} />
-        <span className="text-xs font-medium text-warm-600">{ticket.id}</span>
+        <span className="text-xs font-medium text-warm-600">{ticket.key}</span>
         <div className="flex-1" />
         {ticket.estimate !== undefined && (
           <EstimateChip value={ticket.estimate} />

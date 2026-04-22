@@ -15,7 +15,7 @@ interface BacklogRowProps {
   ticket: Ticket;
   selected?: boolean;
   onClick?: (ticket: Ticket) => void;
-  onSelectChange?: (id: string, checked: boolean) => void;
+  onSelectChange?: (id: number, checked: boolean) => void;
   className?: string;
 }
 
@@ -45,7 +45,7 @@ export function BacklogRow({
     <div
       role="button"
       tabIndex={0}
-      data-ticket={ticket.id}
+      data-ticket={ticket.key}
       onClick={() => onClick?.(ticket)}
       onKeyDown={handleKeyDown}
       className={cn(
@@ -61,12 +61,12 @@ export function BacklogRow({
         checked={selected}
         onChange={handleCheckboxChange}
         onClick={handleCheckboxClick}
-        aria-label={`${ticket.id} 선택`}
+        aria-label={`${ticket.key} 선택`}
         className="m-0 accent-newndy-blue"
       />
       <TypeIcon type={ticket.type} />
       <span className="min-w-[92px] font-medium text-warm-600">
-        {ticket.id}
+        {ticket.key}
       </span>
       <span className="flex-1 truncate text-foreground">{ticket.title}</span>
       {ticket.epic && <EpicPill epic={ticket.epic} />}
