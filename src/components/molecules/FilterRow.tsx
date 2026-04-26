@@ -1,6 +1,6 @@
 'use client';
 
-import { ChevronDown, MoreHorizontal, Plus, Search } from 'lucide-react';
+import { ChevronDown, MoreHorizontal, Plus, Search, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import type { User } from '@/types/board';
@@ -8,12 +8,14 @@ import { Avatar } from '../atoms/Avatar';
 
 interface FilterRowProps {
   onCreate?: () => void;
+  onAICreate?: () => void;
   onSearchChange?: (q: string) => void;
   assignees?: User[];
 }
 
 export function FilterRow({
   onCreate,
+  onAICreate,
   onSearchChange,
   assignees = [],
 }: FilterRowProps) {
@@ -74,6 +76,16 @@ export function FilterRow({
       <Button size="sm" onClick={onCreate} className="h-[30px] gap-1">
         <Plus className="size-3.5" />
         업무 만들기
+      </Button>
+
+      <Button
+        size="sm"
+        variant="outline"
+        onClick={onAICreate}
+        className="h-[30px] gap-1 border-newndy-blue/30 text-newndy-blue hover:bg-newndy-blue/10 hover:text-newndy-blue-active"
+      >
+        <Sparkles className="size-3.5" />
+        AI 만들기
       </Button>
 
       <Button
