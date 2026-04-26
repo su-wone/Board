@@ -3,10 +3,11 @@ import { cn } from '@/lib/utils';
 import type { IssueType } from '@/types/board';
 
 const TYPE_STYLE: Record<IssueType, string> = {
-  task: 'bg-newndy-blue',
-  bug: 'bg-semantic-orange',
-  story: 'bg-semantic-green',
-  epic: 'bg-lavender-deep',
+  TASK: 'bg-newndy-blue',
+  SUB_TASK: 'bg-newndy-blue',
+  BUG: 'bg-semantic-orange',
+  STORY: 'bg-semantic-green',
+  EPIC: 'bg-lavender-deep',
 };
 
 interface TypeIconProps {
@@ -16,11 +17,11 @@ interface TypeIconProps {
 
 export function TypeIcon({ type, className }: TypeIconProps) {
   const Icon =
-    type === 'task'
+    type === 'TASK' || type === 'SUB_TASK'
       ? Check
-      : type === 'bug'
+      : type === 'BUG'
         ? Circle
-        : type === 'story'
+        : type === 'STORY'
           ? Bookmark
           : Zap;
 
@@ -36,7 +37,7 @@ export function TypeIcon({ type, className }: TypeIconProps) {
       <Icon
         className={cn(
           'h-[9px] w-[9px]',
-          type === 'bug' && 'fill-white',
+          type === 'BUG' && 'fill-white',
         )}
         strokeWidth={3}
       />

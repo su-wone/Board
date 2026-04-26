@@ -3,7 +3,6 @@
 import { cn } from '@/lib/utils';
 import type { Ticket } from '@/types/board';
 import { Avatar } from '../atoms/Avatar';
-import { DueWarningPill } from '../atoms/DueWarningPill';
 import { EpicPill } from '../atoms/EpicPill';
 import { EstimateChip } from '../atoms/EstimateChip';
 import { PriorityDot } from '../atoms/PriorityDot';
@@ -46,16 +45,12 @@ export function TicketCard({ ticket, onClick, className }: TicketCardProps) {
         <EpicPill epic={ticket.epic} className="self-start" />
       )}
 
-      {ticket.dueWarning && (
-        <DueWarningPill>{ticket.dueWarning}</DueWarningPill>
-      )}
-
       <div className="mt-0.5 flex items-center gap-2">
         <TypeIcon type={ticket.type} />
         <span className="text-xs font-medium text-warm-600">{ticket.key}</span>
         <div className="flex-1" />
-        {ticket.estimate !== undefined && (
-          <EstimateChip value={ticket.estimate} />
+        {ticket.storyPoint != null && (
+          <EstimateChip value={ticket.storyPoint} />
         )}
         <PriorityDot priority={ticket.priority} />
         <Avatar user={ticket.assignee} size={20} />

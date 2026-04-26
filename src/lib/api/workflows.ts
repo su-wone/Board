@@ -1,6 +1,6 @@
-import type { ServerWorkflow } from '@/types/server';
+import type { Workflow } from '@/types/board';
 import { api } from './client';
 
-export async function getWorkflows(): Promise<ServerWorkflow[]> {
-  return api<ServerWorkflow[]>('/workflows');
+export async function getWorkflows(): Promise<Workflow[]> {
+  return api<Workflow[]>('/workflows');
 }

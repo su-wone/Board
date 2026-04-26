@@ -2,7 +2,7 @@ import { cn } from '@/lib/utils';
 import type { User } from '@/types/board';
 
 interface AvatarProps {
-  user?: User;
+  user?: User | null;
   size?: 20 | 26 | 28;
   className?: string;
 }
@@ -12,6 +12,8 @@ const SIZE_CLASS: Record<NonNullable<AvatarProps['size']>, string> = {
   26: 'h-[26px] w-[26px]',
   28: 'h-7 w-7',
 };
+
+const DEFAULT_AVATAR_COLOR = '#615d59';
 
 export function Avatar({ user, size = 20, className }: AvatarProps) {
   const base = cn(
@@ -32,16 +34,15 @@ export function Avatar({ user, size = 20, className }: AvatarProps) {
     );
   }
 
-  // User.avatarColor stores a hex literal (see src/lib/mock/board-mock.ts).
-  // Tailwind cannot generate dynamic arbitrary hex classes at build time, so
-  // inline style is the one sanctioned exception for per-user color.
+  const initial = user.name.slice(0, 1).toUpperCase();
+
   return (
     <span
       aria-label={user.name}
       className={base}
-      style={{ backgroundColor: user.avatarColor }}
+      style={{ backgroundColor: DEFAULT_AVATAR_COLOR }}
     >
-      {user.initial}
+      {initial}
     </span>
   );
 }

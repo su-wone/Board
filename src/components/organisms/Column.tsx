@@ -10,7 +10,7 @@ interface ColumnProps {
 }
 
 export function Column({ status, tickets }: ColumnProps) {
-  const { openTicket } = useBoardUI();
+  const { openTicket, openCreate } = useBoardUI();
 
   return (
     <div className="flex min-h-[200px] w-[260px] shrink-0 flex-col gap-2 rounded-[10px] bg-warm-50 p-2.5">
@@ -31,6 +31,7 @@ export function Column({ status, tickets }: ColumnProps) {
       </div>
       <button
         type="button"
+        onClick={openCreate}
         className="mt-1 rounded-md px-2 py-1.5 text-left text-[13px] text-warm-600 hover:bg-warm-200/60"
       >
         + 만들기

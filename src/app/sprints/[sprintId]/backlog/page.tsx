@@ -3,7 +3,6 @@ import { AppShell } from '@/components/templates/AppShell';
 import { BacklogSection } from '@/components/organisms/BacklogSection';
 import { CreateSprintButton } from '@/components/molecules/CreateSprintButton';
 import { getCards } from '@/lib/api/cards';
-import { getEpics } from '@/lib/api/epics';
 import { getSprints } from '@/lib/api/sprints';
 import { getWorkflows } from '@/lib/api/workflows';
 import type {
@@ -28,7 +27,23 @@ function compareSprint(a: Sprint, b: Sprint): number {
 }
 
 function toVariant(status: Sprint['status']): BacklogSectionType['variant'] {
-  return status === 'active' ? 'active-sprint' : 'planned-sprint';
+  return status === 'IN_PROGRESS' ? 'active-sprint' : 'planned-sprint';
+}
+
+const KO_MONTHS = [
+  '1월', '2월', '3월', '4월', '5월', '6월',
+  '7월', '8월', '9월', '10월', '11월', '12월',
+];
+
+function formatDateRange(start: string | null, end: string | null): string {
+  const fmt = (iso: string) => {
+    const d = new Date(iso);
+    return `${d.getDate()}. ${KO_MONTHS[d.getMonth()]}`;
+  };
+  if (start && end) return `${fmt(start)} – ${fmt(end)}`;
+  if (start) return fmt(start);
+  if (end) return fmt(end);
+  return '날짜 미정';
 }
 
 export default async function SprintBacklogPage({ params }: Props) {
@@ -40,11 +55,10 @@ export default async function SprintBacklogPage({ params }: Props) {
     getSprints(),
     getCards('null'),
     getWorkflows(),
-    getEpics(),
   ]);
 
   const visibleSprints = sprints
-    .filter((s) => s.status !== 'done')
+    .filter((s) => s.status !== 'DONE')
     .sort(compareSprint);
 
   const sprintTicketLists = await Promise.all(
@@ -68,7 +82,7 @@ export default async function SprintBacklogPage({ params }: Props) {
             variant: toVariant(sprint.status),
             ticketIds: tickets.map((t) => t.id),
             estimate: sumStoryPoints(tickets),
-            dateRange: sprint.dateRange || '날짜 미정',
+            dateRange: formatDateRange(sprint.startDate, sprint.endDate),
           };
           const action = (
             <button
@@ -78,7 +92,7 @@ export default async function SprintBacklogPage({ params }: Props) {
               title="다음 단계에서 연결"
               className="inline-flex h-7 cursor-not-allowed items-center rounded-md border border-border bg-background px-2.5 text-xs font-medium text-warm-600 opacity-60"
             >
-              {sprint.status === 'active' ? '스프린트 완료' : '스프린트 시작'}
+              {sprint.status === 'IN_PROGRESS' ? '스프린트 완료' : '스프린트 시작'}
             </button>
           );
           return (

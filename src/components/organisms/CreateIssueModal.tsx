@@ -17,14 +17,12 @@ import { cn } from '@/lib/utils';
 import type { IssueType, Priority } from '@/types/board';
 import { PriorityDot } from '../atoms/PriorityDot';
 import { TypeIcon } from '../atoms/TypeIcon';
-import type { ToastVariant } from '../molecules/Toast';
 
 interface CreateIssueModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   defaultWorkflowId?: number;
   defaultSprintId?: number | null;
-  onToast?: (message: string, variant?: ToastVariant) => void;
 }
 
 interface FieldProps {
@@ -44,15 +42,15 @@ function Field({ label, children }: FieldProps) {
 }
 
 const TYPE_OPTIONS: { value: IssueType; label: string }[] = [
-  { value: 'task', label: '작업' },
-  { value: 'story', label: '스토리' },
-  { value: 'bug', label: '버그' },
+  { value: 'TASK', label: '작업' },
+  { value: 'STORY', label: '스토리' },
+  { value: 'BUG', label: '버그' },
 ];
 
 const PRIORITY_OPTIONS: { value: Priority; label: string }[] = [
-  { value: 'high', label: 'High' },
-  { value: 'medium', label: 'Med' },
-  { value: 'low', label: 'Low' },
+  { value: 'HIGH', label: 'High' },
+  { value: 'MEDIUM', label: 'Med' },
+  { value: 'LOW', label: 'Low' },
 ];
 
 export function CreateIssueModal({
@@ -60,12 +58,11 @@ export function CreateIssueModal({
   onOpenChange,
   defaultWorkflowId,
   defaultSprintId,
-  onToast,
 }: CreateIssueModalProps) {
   const router = useRouter();
-  const [type, setType] = useState<IssueType>('task');
+  const [type, setType] = useState<IssueType>('TASK');
   const [summary, setSummary] = useState('');
-  const [priority, setPriority] = useState<Priority>('medium');
+  const [priority, setPriority] = useState<Priority>('MEDIUM');
   const [submitting, setSubmitting] = useState(false);
 
   const canSubmit =
@@ -84,14 +81,11 @@ export function CreateIssueModal({
       });
       onOpenChange(false);
       setSummary('');
-      setType('task');
-      setPriority('medium');
-      onToast?.('업무를 생성했습니다');
+      setType('TASK');
+      setPriority('MEDIUM');
       router.refresh();
-    } catch (error) {
-      const message =
-        error instanceof Error ? error.message : '업무 생성에 실패했습니다';
-      onToast?.(message, 'error');
+    } catch {
+      // 에러 처리는 추후 구현
     } finally {
       setSubmitting(false);
     }

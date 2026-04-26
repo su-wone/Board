@@ -1,15 +1,10 @@
 'use client';
 
 import { Plus } from 'lucide-react';
-import { useBoardUI } from '@/hooks/use-board-ui';
 
 export function CreateSprintButton() {
-  const { showToast } = useBoardUI();
-
   // TODO: POST /sprints 연동은 Phase 4 에서 처리.
-  const handleClick = () => {
-    showToast('다음 단계에서 연결');
-  };
+  const handleClick = () => {};
 
   return (
     <button

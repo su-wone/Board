@@ -2,9 +2,9 @@ import { cn } from '@/lib/utils';
 import type { Priority } from '@/types/board';
 
 const PRIORITY_STYLE: Record<Priority, string> = {
-  high: 'bg-semantic-orange',
-  medium: 'bg-warm-600',
-  low: 'bg-newndy-blue-legacy',
+  HIGH: 'bg-semantic-orange',
+  MEDIUM: 'bg-warm-600',
+  LOW: 'bg-newndy-blue-legacy',
 };
 
 interface PriorityDotProps {

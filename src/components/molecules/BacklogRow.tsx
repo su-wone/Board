@@ -4,7 +4,6 @@ import type { KeyboardEvent, ChangeEvent, MouseEvent } from 'react';
 import { cn } from '@/lib/utils';
 import type { Ticket } from '@/types/board';
 import { Avatar } from '../atoms/Avatar';
-import { DueWarningPill } from '../atoms/DueWarningPill';
 import { EpicPill } from '../atoms/EpicPill';
 import { EstimateChip } from '../atoms/EstimateChip';
 import { PriorityDot } from '../atoms/PriorityDot';
@@ -71,11 +70,8 @@ export function BacklogRow({
       <span className="flex-1 truncate text-foreground">{ticket.title}</span>
       {ticket.epic && <EpicPill epic={ticket.epic} />}
       <StatusPill status={ticket.status} />
-      {ticket.dueWarning && (
-        <DueWarningPill>{ticket.dueWarning}</DueWarningPill>
-      )}
-      {ticket.estimate !== undefined && (
-        <EstimateChip variant="onGray" value={ticket.estimate} />
+      {ticket.storyPoint != null && (
+        <EstimateChip variant="onGray" value={ticket.storyPoint} />
       )}
       <PriorityDot priority={ticket.priority} />
       <Avatar user={ticket.assignee} size={20} />

@@ -11,7 +11,7 @@ export default async function Page() {
     getCards(),
     getWorkflows(),
   ]);
-  const active = sprints.find((s) => s.status === 'active') ?? sprints[0];
+  const active = sprints.find((s) => s.status === 'IN_PROGRESS') ?? sprints[0];
   if (!active) notFound();
   const tickets = cards.filter((t) => t.sprintId === active.id);
   const todoWorkflowId = workflows.find((w) => w.title === 'TO DO')?.id;
