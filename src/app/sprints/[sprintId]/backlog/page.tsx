@@ -53,7 +53,7 @@ export default async function SprintBacklogPage({ params }: Props) {
 
   const [sprints, backlogTickets, workflows] = await Promise.all([
     getSprints(),
-    getCards('null'),
+    getCards(null),
     getWorkflows(),
   ]);
 

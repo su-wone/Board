@@ -7,7 +7,6 @@ import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
 interface SideNavProps {
-  activeSpace?: 'veasly' | 'biz';
   activeItemHref?: string;
 }
 

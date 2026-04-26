@@ -11,6 +11,7 @@ import {
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import { PRIORITY_OPTIONS } from '@/lib/constants';
 import { cn } from '@/lib/utils';
 import type { IssueType, Priority } from '@/types/board';
 import { PriorityDot } from '../atoms/PriorityDot';
@@ -34,12 +35,6 @@ const TYPE_OPTIONS: { value: IssueType; label: string }[] = [
   { value: 'STORY', label: '스토리' },
   { value: 'TASK', label: '태스크' },
   { value: 'SUB_TASK', label: '서브태스크' },
-];
-
-const PRIORITY_OPTIONS: { value: Priority; label: string }[] = [
-  { value: 'HIGH', label: 'High' },
-  { value: 'MEDIUM', label: 'Med' },
-  { value: 'LOW', label: 'Low' },
 ];
 
 function EditTicketModal({

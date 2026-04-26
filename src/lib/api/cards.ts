@@ -10,12 +10,9 @@ export interface CreateCardInput {
   epicId?: number;
 }
 
-export async function getCards(sprintId?: number | 'null'): Promise<Ticket[]> {
-  const params = new URLSearchParams();
-  if (sprintId === 'null') params.set('sprintId', 'null');
-  else if (sprintId !== undefined) params.set('sprintId', String(sprintId));
-  const qs = params.toString();
-  return api<Ticket[]>(`/cards${qs ? `?${qs}` : ''}`);
+export async function getCards(sprintId?: number | null): Promise<Ticket[]> {
+  if (sprintId === undefined) return api<Ticket[]>('/cards');
+  return api<Ticket[]>(`/cards?sprintId=${sprintId}`);
 }
 
 export async function getCard(id: number): Promise<Ticket> {

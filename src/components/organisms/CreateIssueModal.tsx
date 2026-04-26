@@ -2,7 +2,6 @@
 
 import { ChevronDown } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import type { ReactNode } from 'react';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import {
@@ -13,8 +12,10 @@ import {
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { createCard } from '@/lib/api/cards';
+import { PRIORITY_OPTIONS } from '@/lib/constants';
 import { cn } from '@/lib/utils';
 import type { IssueType, Priority } from '@/types/board';
+import { Field } from '../atoms/Field';
 import { PriorityDot } from '../atoms/PriorityDot';
 import { TypeIcon } from '../atoms/TypeIcon';
 
@@ -25,32 +26,10 @@ interface CreateIssueModalProps {
   defaultSprintId?: number | null;
 }
 
-interface FieldProps {
-  label: ReactNode;
-  children: ReactNode;
-}
-
-function Field({ label, children }: FieldProps) {
-  return (
-    <div className="flex flex-col gap-1.5">
-      <span className="text-[11px] font-semibold uppercase tracking-[0.06em] text-warm-400">
-        {label}
-      </span>
-      <div className="text-sm">{children}</div>
-    </div>
-  );
-}
-
 const TYPE_OPTIONS: { value: IssueType; label: string }[] = [
   { value: 'TASK', label: '작업' },
   { value: 'STORY', label: '스토리' },
   { value: 'BUG', label: '버그' },
-];
-
-const PRIORITY_OPTIONS: { value: Priority; label: string }[] = [
-  { value: 'HIGH', label: 'High' },
-  { value: 'MEDIUM', label: 'Med' },
-  { value: 'LOW', label: 'Low' },
 ];
 
 export function CreateIssueModal({
@@ -84,8 +63,8 @@ export function CreateIssueModal({
       setType('TASK');
       setPriority('MEDIUM');
       router.refresh();
-    } catch {
-      // 에러 처리는 추후 구현
+    } catch (error) {
+      console.error('카드 생성 실패:', error);
     } finally {
       setSubmitting(false);
     }

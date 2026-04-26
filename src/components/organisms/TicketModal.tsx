@@ -1,7 +1,6 @@
 'use client';
 
 import { ChevronDown, MoreHorizontal } from 'lucide-react';
-import type { ReactNode } from 'react';
 import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import {
@@ -15,6 +14,7 @@ import { getCard } from '@/lib/api/cards';
 import type { Ticket } from '@/types/board';
 import { Avatar } from '../atoms/Avatar';
 import { EpicPill } from '../atoms/EpicPill';
+import { Field } from '../atoms/Field';
 import { PriorityDot } from '../atoms/PriorityDot';
 import { StatusPill } from '../atoms/StatusPill';
 import { TypeIcon } from '../atoms/TypeIcon';
@@ -22,22 +22,6 @@ import { TypeIcon } from '../atoms/TypeIcon';
 interface TicketModalProps {
   ticket: Ticket | null;
   onOpenChange: (open: boolean) => void;
-}
-
-interface FieldProps {
-  label: ReactNode;
-  children: ReactNode;
-}
-
-function Field({ label, children }: FieldProps) {
-  return (
-    <div className="flex flex-col gap-1">
-      <span className="text-[11px] font-semibold uppercase tracking-[0.06em] text-warm-400">
-        {label}
-      </span>
-      <div className="text-sm">{children}</div>
-    </div>
-  );
 }
 
 export function TicketModal({ ticket, onOpenChange }: TicketModalProps) {
@@ -143,7 +127,7 @@ export function TicketModal({ ticket, onOpenChange }: TicketModalProps) {
               <ChevronDown className="size-3.5" />
             </Button>
 
-            <Field label="담당자">
+            <Field className="gap-1" label="담당자">
               {detail.assignee ? (
                 <div className="flex items-center gap-2">
                   <Avatar user={detail.assignee} size={20} />
@@ -154,7 +138,7 @@ export function TicketModal({ ticket, onOpenChange }: TicketModalProps) {
               )}
             </Field>
 
-            <Field label="보고자">
+            <Field className="gap-1" label="보고자">
               {detail.reporter ? (
                 <div className="flex items-center gap-2">
                   <Avatar user={detail.reporter} size={20} />
@@ -165,26 +149,26 @@ export function TicketModal({ ticket, onOpenChange }: TicketModalProps) {
               )}
             </Field>
 
-            <Field label="Epic">
+            <Field className="gap-1" label="Epic">
               {detail.epic ? <EpicPill epic={detail.epic} /> : '없음'}
             </Field>
 
-            <Field label="스프린트">
+            <Field className="gap-1" label="스프린트">
               {detail.sprintId !== undefined ? `#${detail.sprintId}` : '—'}
             </Field>
 
-            <Field label="우선순위">
+            <Field className="gap-1" label="우선순위">
               <div className="flex items-center gap-1.5">
                 <PriorityDot priority={detail.priority} />
                 <span className="capitalize">{detail.priority}</span>
               </div>
             </Field>
 
-            <Field label="스토리 포인트">
+            <Field className="gap-1" label="스토리 포인트">
               {detail.storyPoint ?? '—'}
             </Field>
 
-            <Field label="라벨">
+            <Field className="gap-1" label="라벨">
               {detail.labels?.length
                 ? detail.labels.map((label) => (
                     <span

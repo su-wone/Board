@@ -37,23 +37,23 @@ export function AppShell({
   const pathname = usePathname() ?? '/';
   const [creating, setCreating] = useState(false);
   const [aiCreating, setAICreating] = useState(false);
-  const [openTicket, setOpenTicketState] = useState<Ticket | null>(null);
+  const [selectedTicket, setSelectedTicket] = useState<Ticket | null>(null);
 
   const openCreate = useCallback(() => setCreating(true), []);
   const openAICreate = useCallback(() => setAICreating(true), []);
-  const openTicketHandler = useCallback(
-    (ticket: Ticket) => setOpenTicketState(ticket),
+  const openTicket = useCallback(
+    (ticket: Ticket) => setSelectedTicket(ticket),
     [],
   );
-  const closeTicket = useCallback(() => setOpenTicketState(null), []);
+  const closeTicket = useCallback(() => setSelectedTicket(null), []);
 
   const value = useMemo<BoardUIContextValue>(
     () => ({
       openCreate,
-      openTicket: openTicketHandler,
+      openTicket,
       closeTicket,
     }),
-    [openCreate, openTicketHandler, closeTicket],
+    [openCreate, openTicket, closeTicket],
   );
 
   return (
@@ -71,9 +71,9 @@ export function AppShell({
         </div>
       </div>
       <TicketModal
-        ticket={openTicket}
+        ticket={selectedTicket}
         onOpenChange={(open) => {
-          if (!open) setOpenTicketState(null);
+          if (!open) setSelectedTicket(null);
         }}
       />
       <CreateIssueModal

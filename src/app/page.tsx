@@ -6,14 +6,13 @@ import { getSprints } from '@/lib/api/sprints';
 import { getWorkflows } from '@/lib/api/workflows';
 
 export default async function Page() {
-  const [sprints, cards, workflows] = await Promise.all([
+  const [sprints, workflows] = await Promise.all([
     getSprints(),
-    getCards(),
     getWorkflows(),
   ]);
   const active = sprints.find((s) => s.status === 'IN_PROGRESS') ?? sprints[0];
   if (!active) notFound();
-  const tickets = cards.filter((t) => t.sprintId === active.id);
+  const tickets = await getCards(active.id);
   const todoWorkflowId = workflows.find((w) => w.title === 'TO DO')?.id;
 
   return (
